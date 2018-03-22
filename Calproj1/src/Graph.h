@@ -27,7 +27,7 @@ class Vertex {
 	T info;                // contents
 	vector<Edge<T> > adj;  // outgoing edges
 	bool visited;          // auxiliary field
-	double dist = 0;
+	double custo = 0;
 	Vertex<T> *path = NULL;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
 
@@ -38,7 +38,7 @@ public:
 	Vertex(T in);
 	bool operator<(Vertex<T> & vertex) const; // // required by MutablePriorityQueue
 	T getInfo() const;
-	double getDist() const;
+	double getCusto() const;
 	Vertex *getPath() const;
 	friend class Graph<T>;
 };
@@ -58,7 +58,7 @@ void Vertex<T>::addEdge(Vertex<T> *d, double w) {
 
 template <class T>
 bool Vertex<T>::operator<(Vertex<T> & vertex) const {
-	return this->dist < vertex.dist;
+	return this->custo < vertex.custo;
 }
 
 template <class T>
@@ -67,8 +67,8 @@ T Vertex<T>::getInfo() const {
 }
 
 template <class T>
-double Vertex<T>::getDist() const {
-	return this->dist;
+double Vertex<T>::getCusto() const {
+	return this->custo;
 }
 
 template <class T>
@@ -175,7 +175,7 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
 	if(orig == NULL)
 		return;
 	for (auto v : vertexSet){
-		v->dist = 9999;
+		v->dist = INF;
 		v->path = NULL;
 	}
 	orig->dist = 0;
