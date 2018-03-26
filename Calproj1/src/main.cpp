@@ -115,6 +115,8 @@ int main(void) {
 		return -2;
 	}
 
-	cout << "The optimized route regarding cost is: ";
+	double tripCost = myGraph.getTripCost(d4);
+	cout << "The optimized route regarding cost (" << tripCost <<" €) is: ";
 	getSinglePath(myGraph, myGraph.getPath(d3, d4));
+
 }

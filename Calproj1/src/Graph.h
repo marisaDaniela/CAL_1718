@@ -105,6 +105,7 @@ public:
 	bool addEdge(const T &sourc, const T &dest, double w);
 	int getNumVertex() const;
 	vector<Vertex<T> *> getVertexSet() const;
+	double getTripCost(const T &in) const;
 
 	// Fp05 - single source
 	void dijkstraShortestPath(const T &s);
@@ -138,6 +139,14 @@ Vertex<T> * Graph<T>::findVertex(const T &in) const {
 		if (v->info == in)
 			return v;
 	return NULL;
+}
+
+template <class T>
+double Graph<T>::getTripCost(const T &in) const{
+	double cost = 0;
+	Vertex<T> *dest= findVertex(in);
+	cost = dest->custo;
+	return cost;
 }
 
 /*
