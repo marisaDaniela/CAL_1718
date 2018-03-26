@@ -52,7 +52,6 @@ int main(void) {
 		istringstream ss;
 		ss.str(line);
 		ss >> nome >> custo_aloj;
-		cout << nome << " " <<custo_aloj<<endl;
 		double custo_alojamento = atof(custo_aloj.c_str());
 
 
@@ -76,7 +75,6 @@ int main(void) {
 		istringstream ss;
 		ss.str(line);
 		ss >> nome1 >> nome2 >> custo_viaj;
-		cout << nome1 << " " << nome2 <<" "<<custo_viaj<<endl;
 		double custo_viajem = atof(custo_viaj.c_str());
 
 		Destino d1 = getDestinoByName(destinos,nome1);
