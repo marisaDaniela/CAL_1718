@@ -7,6 +7,4 @@ Londres 100.3
 Copenhaga 84.9
 Bruxelas 77.6
 Roma 130.5
----
-Lisboa Madrid 130
-Madrid Paris 50.3
+
