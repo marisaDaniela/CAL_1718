@@ -1,2 +1,4 @@
 Lisboa Madrid 130
 Madrid Paris 50.3
+Lisboa Amesterdao 135
+Amesterdao Paris 50

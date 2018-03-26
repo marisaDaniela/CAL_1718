@@ -41,6 +41,7 @@ public:
 	double getCusto() const;
 	Vertex *getPath() const;
 	friend class Graph<T>;
+	friend class MutablePriorityQueue<Vertex<T>>;
 };
 
 
@@ -175,20 +176,20 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
 	if(orig == NULL)
 		return;
 	for (auto v : vertexSet){
-		v->dist = INF;
+		v->custo = INF;
 		v->path = NULL;
 	}
-	orig->dist = 0;
+	orig->custo = 0;
 	MutablePriorityQueue<Vertex<T> > q;
 	q.insert(orig);
 	while(!q.empty()){
 		auto v = q.extractMin();
 		for (auto i = v->adj.begin();i!=v->adj.end();i++){
-			if ((*i).dest->dist > v->dist + (*i).weight){
-				double aux = (*i).dest->dist;
-				(*i).dest->dist = v->dist + (*i).weight;
+			if ((*i).dest->custo > v->custo + (*i).custo_viagem){
+				double aux = (*i).dest->custo;
+				(*i).dest->custo = v->custo + (*i).custo_viagem;
 				(*i).dest->path=v;
-				if(aux==9999)
+				if(aux==INF)
 					q.insert((*i).dest);
 				else
 					q.decreaseKey((*i).dest);
