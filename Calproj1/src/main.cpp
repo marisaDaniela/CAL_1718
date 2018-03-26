@@ -16,7 +16,7 @@ int main(void) {
 	double custo_alojamento;
 	Graph<Destino> myGraph;
 
-	ficheiro.open("jurados.txt");
+	ficheiro.open("destinos.txt");
 
 	string line;
 
