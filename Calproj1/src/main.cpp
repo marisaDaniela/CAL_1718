@@ -7,6 +7,7 @@
 #include "Destino.h"
 #include "Graph.h"
 #include "PreProcess.h"
+#include "Agencia.h"
 
 using namespace std;
 
@@ -37,6 +38,11 @@ void getSinglePath(Graph<T> &g, vector<T> path) {
 int main(void) {
 	ifstream ficheiro;
 	Graph<Destino> myGraph;
+
+//	Testar:
+//	Agencia a1;
+//  a1.leFicheiroAlojamentos();
+//	a1.verAlojamentos();
 
 	ficheiro.open("destinos.txt");
 	if(!ficheiro){
@@ -118,7 +124,7 @@ int main(void) {
 	}
 
 	double tripCost = myGraph.getTripCost(d4);
-	cout << "The optimized route regarding cost (" << tripCost <<" €) is: ";
+	cout << "The optimized route regarding cost (" << tripCost <<" ï¿½) is: ";
 	getSinglePath(myGraph, myGraph.getPath(d3, d4));
 */
 	int num = 0;
