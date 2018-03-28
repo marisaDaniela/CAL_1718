@@ -11,7 +11,7 @@ void Agencia::leFicheiroAlojamentos() {
 	string cidade, dataInicio, dataFim, custoS;
 	double custo;
 
-	ficheiro.open("alojamentos.csv");
+	ficheiro.open("paises/lisboa.csv");
 	if(!ficheiro) {
 		cout << "Error opening file!"<<endl;
 		return;
