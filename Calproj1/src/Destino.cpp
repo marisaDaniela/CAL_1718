@@ -15,7 +15,3 @@ bool Destino::operator == (const Destino &d2) const {
 	return (name==d2.name && custo_aloj==d2.custo_aloj);
 }
 
-/*ostream & operator << (ostream &os, Destino &d) {
-   os << d.getName();
-   return os;
-}*/

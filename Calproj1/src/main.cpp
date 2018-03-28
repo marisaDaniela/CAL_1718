@@ -6,8 +6,11 @@
 
 #include "Destino.h"
 #include "Graph.h"
+#include "PreProcess.h"
 
 using namespace std;
+
+#define INF std::numeric_limits<double>::max()
 
 Destino getDestinoByName(const vector<Destino> vec, string name){
 	Destino dest;
@@ -30,7 +33,6 @@ void getSinglePath(Graph<T> &g, vector<T> path) {
 			cout << path[i].getName() << " -> ";
 	}
 }
-
 
 int main(void) {
 	ifstream ficheiro;
@@ -101,7 +103,7 @@ int main(void) {
 		return -1;
 	}
 
-	cout<< "->Where are you travelling to? Write the name of the city from the provided list."<<endl;
+	/*cout<< "->Where are you travelling to? Write the name of the city from the provided list."<<endl;
 	cin >> dest;
 	Destino d4 = getDestinoByName(destinos,dest);
 	if(d3.getName()==""){
@@ -118,5 +120,18 @@ int main(void) {
 	double tripCost = myGraph.getTripCost(d4);
 	cout << "The optimized route regarding cost (" << tripCost <<" €) is: ";
 	getSinglePath(myGraph, myGraph.getPath(d3, d4));
+*/
+	int num = 0;
+	cout<< "->How many cities would you like to visit? ";
+	cin >> num;
+	cout<< "\nWrite the name of the cities from the provided list. <city1 city2 city3 ... cityN>"<<endl;
+	PreProcess<Destino> *p = new PreProcess<Destino>(num,destinos,d3);
+	p->dijkstraAllPairs(myGraph);
+	if(!p->checkIfPossible(d3))
+		cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
+	else
+		cout << "Currently trying to find the best price for those days. Wait a minute please..."<<endl;
 
+	cout<<"Program ended"<<endl;
+	return 0;
 }

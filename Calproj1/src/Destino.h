@@ -1,10 +1,8 @@
-/*
- * Person.h
- */
-
-
 #include <string>
 using namespace std;
+
+#ifndef DESTINO_H_
+#define DESTINO_H_
 
 class Destino{
 	string name;
@@ -15,7 +13,6 @@ public:
 	string getName() const;
 	double getCustoAloj() const;
 	bool operator == (const Destino &d2) const;
-	//friend ostream & operator << (ostream &os, Destino &d);
 };
-
+#endif
 
