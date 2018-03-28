@@ -31,7 +31,7 @@ PreProcess<T>::PreProcess(int n, vector<Destino> allDestinos){
 
 template <class T>
 PreProcess<T>::PreProcess(int n, vector<Destino> allDestinos, Destino orig){
-	num = n+1;
+	num = n + 1;
 	locais.push_back(orig);
 	getDestinations(allDestinos);
 }
