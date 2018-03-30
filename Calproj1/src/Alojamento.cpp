@@ -56,3 +56,4 @@ ostream& operator<<(ostream& out, const Alojamento &a) {
 	return out;
 }
 
+

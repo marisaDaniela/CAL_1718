@@ -17,9 +17,21 @@ using namespace std;
 
 class Agencia {
 	vector<Alojamento *> alojamentos;
+	vector<Alojamento *> amesterdao;
+	vector<Alojamento *> berlim;
+	vector<Alojamento *> bruxelas;
+	vector<Alojamento *> lisboa;
+	vector<Alojamento *> madrid;
+	vector<Alojamento *> paris;
+	vector<Alojamento *> praga;
 public:
-	void leFicheiroAlojamentos();
+	void leFicheiroAlojamentos(string nomeCidade);
+	void verAlojamentos(string nomeCidade);
 
-	void verAlojamentos();
+	/**
+	* Função que retorna o custo a partir do dia x (passado por argumento) durante
+	* y dias (passado por argumento) para uma determinada cidade (passado por argumento)
+	*/
+	double getCustoTempo(string data, int dias, string cidade);
 };
 

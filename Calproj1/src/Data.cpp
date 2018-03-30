@@ -11,7 +11,7 @@ Data::Data(int dia, int mes, int ano) {
 }
 
 Data::Data(string dataStr) {
-	dia = stoi(dataStr.substr(0, 1));
+	dia = stoi(dataStr.substr(0, 2));
 	mes = stoi(dataStr.substr(3, 4));
 	ano = stoi(dataStr.substr(6, 9));
 	setDataString(dataStr);
@@ -59,5 +59,10 @@ ostream& operator<<(ostream& out, const Data & data)
 	return out;
 }
 
+bool Data::operator==(Data& rhs) const {
+	if ((this->dia == rhs.dia) && (this->mes == rhs.mes) && (this->ano == rhs.ano))
+		return true;
+	return false;
+}
 
 

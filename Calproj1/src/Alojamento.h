@@ -12,10 +12,10 @@
 
 class Alojamento {
 	string cidade;
-	Data dataInicio;
-	Data dataFim;
 	double custo;
 public:
+	Data dataInicio;
+	Data dataFim;
 	Alojamento(string cidade, Data dataInicio, Data dataFim, double custo);
 	virtual ~Alojamento();
 
