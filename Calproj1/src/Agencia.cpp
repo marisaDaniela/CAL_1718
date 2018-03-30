@@ -72,7 +72,6 @@ void Agencia::verAlojamentos(string nomeCidade) {
 	}
 }
 
-// TODO: tratar dos meses e anos diferetes
 double Agencia::getCustoTempo(string data, int dias, string cidade) {
 	Data data1(data);
 
@@ -80,7 +79,7 @@ double Agencia::getCustoTempo(string data, int dias, string cidade) {
 	{
 		for(int i = 0; i < amesterdao.size(); i++)
 		{
-			if(data1 == amesterdao[i]->dataInicio) {
+			if(data1 == amesterdao[i]->dataInicio) { // TODO: tratar dos meses e anos diferetes
 				if((amesterdao[i]->getDataFim().getDia()) == (amesterdao[i]->getDataInicio().getDia() + dias))
 				{
 					cout << "Amesterdao: o custo sera de:" << amesterdao[i]->getCusto() << " € " << endl;

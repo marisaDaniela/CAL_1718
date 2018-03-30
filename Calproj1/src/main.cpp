@@ -40,7 +40,7 @@ int main(void) {
 	Graph<Destino> myGraph;
 
 	//Apenas para teste:
-//	Agencia a1;
+	//Agencia a1;
 //
 //	a1.leFicheiroAlojamentos("lisboa");
 //	a1.leFicheiroAlojamentos("berlim");
@@ -60,6 +60,10 @@ int main(void) {
 //	a1.getCustoTempo("04/07/2018",1,"amesterdao");
 //	a1.getCustoTempo("10/1/2019",7,"madrid");
 //	a1.getCustoTempo("12/11/2018",3,"berlim");
+
+//	Alojamento a1;
+//	a1.criaDatas("30/01/2018", "21/05/2018");
+//  a1.showDatas();
 
 	ficheiro.open("destinos.txt");
 	if(!ficheiro){

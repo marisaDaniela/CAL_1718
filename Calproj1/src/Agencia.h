@@ -29,9 +29,9 @@ public:
 	void verAlojamentos(string nomeCidade);
 
 	/**
-	* Função que retorna o custo a partir do dia x (passado por argumento) durante
-	* y dias (passado por argumento) para uma determinada cidade (passado por argumento)
-	*/
+	 *  Função que retorna o custo a partir do dia x (passado por argumento) durante
+	 *  y dias (passado por argumento) para uma determinada cidade (passado por argumento)
+	 */
 	double getCustoTempo(string data, int dias, string cidade);
 };
 
