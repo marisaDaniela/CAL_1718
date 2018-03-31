@@ -57,7 +57,6 @@ void Alojamento::criaDatas(string d1, string d2) {
 
 	int dia = dataInicio.getDia();
 	int mes = dataInicio.getMes();
-
 	int num = numDias(mes, dataInicio.getAno());
 
 	while(mes<dataFim.getMes() || dia <= dataFim.getDia())
