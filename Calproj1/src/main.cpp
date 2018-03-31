@@ -7,6 +7,7 @@
 #include "Destino.h"
 #include "Graph.h"
 #include "PreProcess.h"
+#include "Agencia.h"
 
 using namespace std;
 
@@ -37,6 +38,32 @@ void getSinglePath(Graph<T> &g, vector<T> path) {
 int main(void) {
 	ifstream ficheiro;
 	Graph<Destino> myGraph;
+
+	//Apenas para teste:
+//	Agencia a1;
+//
+//	a1.leFicheiroAlojamentos("lisboa");
+//	a1.leFicheiroAlojamentos("berlim");
+//	a1.leFicheiroAlojamentos("bruxelas");
+//	a1.leFicheiroAlojamentos("madrid");
+//	a1.leFicheiroAlojamentos("amesterdao");
+//
+//	a1.verAlojamentos("lisboa");
+//	a1.verAlojamentos("berlim");
+//	a1.verAlojamentos("bruxelas");
+//	a1.verAlojamentos("madrid");
+//	a1.verAlojamentos("amesterdao");
+//
+//
+//	a1.getCustoTempo("08/05/2018",2,"lisboa");
+//	a1.getCustoTempo("11/11/2018",2,"lisboa");
+//	a1.getCustoTempo("04/07/2018",1,"amesterdao");
+//	a1.getCustoTempo("10/1/2019",7,"madrid");
+//	a1.getCustoTempo("12/11/2018",3,"berlim");
+
+	/*Alojamento a1;
+	a1.criaDatas("30/01/2018", "21/05/2018");
+	a1.showDatas();*/
 
 	ficheiro.open("destinos.txt");
 	if(!ficheiro){
@@ -118,9 +145,11 @@ int main(void) {
 	}
 
 	double tripCost = myGraph.getTripCost(d4);
-	cout << "The optimized route regarding cost (" << tripCost <<" €) is: ";
+	cout << "The optimized route regarding cost (" << tripCost <<" ï¿½) is: ";
 	getSinglePath(myGraph, myGraph.getPath(d3, d4));
-*/
+	 */
+
+
 	int num = 0;
 	cout<< "->How many cities would you like to visit? ";
 	cin >> num;
