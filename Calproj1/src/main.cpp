@@ -40,9 +40,9 @@ int main(void) {
 	Graph<Destino> myGraph;
 
 	//Apenas para teste:
-//	Agencia a1;
-//
-//	a1.leFicheiroAlojamentos("lisboa");
+	//Agencia a1;
+
+	//a1.leFicheiroAlojamentos("lisboa");
 //	a1.leFicheiroAlojamentos("berlim");
 //	a1.leFicheiroAlojamentos("bruxelas");
 //	a1.leFicheiroAlojamentos("madrid");
@@ -55,7 +55,9 @@ int main(void) {
 //	a1.verAlojamentos("amesterdao");
 //
 //
-//	a1.getCustoTempo("08/05/2018",2,"lisboa");
+	/*double custo = a1.getCustoTempo("30/06/2018",2,"Lisboa");
+	cout << custo;
+	return 0;
 //	a1.getCustoTempo("11/11/2018",2,"lisboa");
 //	a1.getCustoTempo("04/07/2018",1,"amesterdao");
 //	a1.getCustoTempo("10/1/2019",7,"madrid");

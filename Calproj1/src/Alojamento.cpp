@@ -59,20 +59,29 @@ void Alojamento::criaDatas(string d1, string d2) {
 	int mes = dataInicio.getMes();
 	int num = numDias(mes, dataInicio.getAno());
 
-	while(mes<dataFim.getMes() || dia <= dataFim.getDia())
+	bool stop = false;
+
+
+	while(!stop)
 	{
 		Data *d1 = new Data(dia, mes, dataInicio.getAno());
 		datas.push_back(d1);
+		if(stop)
+			break;
+		if(dia==dataFim.getDia() && mes==dataFim.getMes())
+			stop = true;
 		if(dia == num) {
 			dia = 0;
-			if(mes < 12){
+			if(mes < 12)
 				mes++;
-				num = numDias(mes, dataInicio.getAno());
-			}
+			else
+				mes = 1;
+			num = numDias(mes, dataInicio.getAno());
+
 		}
 		dia++;
 	}
-	showDatas();
+	//showDatas();
 }
 
 void Alojamento::showDatas() {

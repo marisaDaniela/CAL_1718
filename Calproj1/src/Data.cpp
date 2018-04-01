@@ -59,10 +59,8 @@ ostream& operator<<(ostream& out, const Data & data)
 	return out;
 }
 
-bool Data::operator==(Data& rhs) const {
-	if ((this->dia == rhs.dia) && (this->mes == rhs.mes) && (this->ano == rhs.ano))
-		return true;
-	return false;
+bool Data::operator == (Data &rhs) const {
+	return (dia==rhs.dia && mes==rhs.mes && ano==rhs.ano);
 }
 
 

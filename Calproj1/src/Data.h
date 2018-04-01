@@ -26,7 +26,7 @@ public:
 	string getDataString() const;
 	void setDataString(string data);
 
-	bool operator==(Data& rhs) const;
+	bool operator == (Data &rhs) const;
 	friend ostream& operator<<(ostream& out, const Data &d);
 
 };

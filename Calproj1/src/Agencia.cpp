@@ -30,6 +30,7 @@ void Agencia::leFicheiroAlojamentos(string nomeCidade) {
 		custo = atof(custoS.c_str());
 
 		Alojamento *a = new Alojamento(cidade, d1, d2, custo);
+		a->criaDatas(dataInicio,dataFim);
 
 		if(nomeCidade == "amesterdao")
 			amesterdao.push_back(a);
@@ -72,23 +73,84 @@ void Agencia::verAlojamentos(string nomeCidade) {
 	}
 }
 
+
+
+
 double Agencia::getCustoTempo(string data, int dias, string cidade) {
 	Data data1(data);
 
-	if(cidade == "amesterdao")
-	{
-		for(int i = 0; i < amesterdao.size(); i++)
-		{
-			if(data1 == amesterdao[i]->dataInicio) { // TODO: tratar dos meses e anos diferetes
+	double custo = 0;
+	int daysleft = 0;
+	bool start = false;
+	vector<Alojamento *> city;
+
+	if(cidade=="Amesterdao")
+		city = amesterdao;
+	else if(cidade=="Berlim")
+		city = berlim;
+	else if(cidade=="Bruxelas")
+		city = bruxelas;
+	else if(cidade=="Lisboa")
+		city = lisboa;
+	else if(cidade=="Madrid")
+		city = madrid;
+	else if(cidade=="Paris")
+		city = paris;
+	else if(cidade=="Praga")
+		city = praga;
+
+	bool done = false;
+
+	for(int i=0; i<city.size();i++){
+		for(auto data : city[i]->getDatas()){
+			if(data1.getDia()==data->getDia() && data1.getMes()==data->getMes() && data1.getAno()==data->getAno()){
+				daysleft = dias;
+				start = true;
+			}
+			if(start){
+				daysleft--;
+				custo += city[i]->getCusto();
+				if(daysleft==0){
+					done = true;
+					break;
+				}
+			}
+		}
+		if(done)
+			break;
+	}
+
+	return custo;
+
+
+	/*if(cidade == "amesterdao"){
+		for(int i = 0; i < amesterdao.size(); i++){
+			/*
+			 * for(auto data = amesterdao[i].getDatas(){
+			 *		if(data1==data)
+			 *			daysleft = dias;
+			 *			start = true;
+		 *			if(start){
+						daysleft--;
+						custo += amesterdao[i].getCusto();
+						if(daysleft==0)
+							break;
+					}
+			 *
+			 * }
+			 *
+			 */
+			/*if(data1 == amesterdao[i]->dataInicio) {
 				if((amesterdao[i]->getDataFim().getDia()) == (amesterdao[i]->getDataInicio().getDia() + dias))
 				{
-					cout << "Amesterdao: o custo sera de:" << amesterdao[i]->getCusto() << " â‚¬ " << endl;
+					cout << "Amesterdao: o custo sera de:" << amesterdao[i]->getCusto() << " € " << endl;
 				}
 				else
 				{
 					cout << "Nao existem voos disponiveis para o periodo de tempo requirido!" << endl;
 				}
 			}
+
 		}
 	}
 	else if(cidade == "berlim")
@@ -187,5 +249,5 @@ double Agencia::getCustoTempo(string data, int dias, string cidade) {
 				}
 			}
 		}
-	}
+	}*/
 }
