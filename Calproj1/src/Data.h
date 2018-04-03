@@ -14,6 +14,8 @@ public:
 	virtual ~Data();
 	Data(string data); // data na forma DD/MM/AAA
 
+	void buildString();
+
 	int getAno() const;
 	void setAno(int ano);
 
@@ -27,6 +29,7 @@ public:
 	void setDataString(string data);
 
 	bool operator == (Data &rhs) const;
+	bool operator > (Data &rhs) const;
 	friend ostream& operator<<(ostream& out, const Data &d);
 
 };

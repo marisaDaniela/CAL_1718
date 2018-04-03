@@ -3,8 +3,6 @@ Madrid 78.2
 Paris 90.7
 Amesterdao 60.9
 Berlim 150.3
-Londres 100.3
-Copenhaga 84.9
+Praga 100.3
 Bruxelas 77.6
-Roma 130.5
 

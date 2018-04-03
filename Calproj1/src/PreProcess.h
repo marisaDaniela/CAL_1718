@@ -12,15 +12,16 @@ using namespace std;
 
 template <class T>
 class PreProcess{
-	vector<Destino> locais;
 	Graph<T> newGraph;
 	int num;
 public:
+	vector<Destino> locais;
 	PreProcess (int n, vector<Destino> allDestinos);
 	PreProcess (int n, vector<Destino> allDestinos, Destino orig);
 	void getDestinations(vector<Destino>) ;
 	void dijkstraAllPairs( Graph<T> graph);
 	bool checkIfPossible(Destino origin);
+	Graph<T> getGraph() const;
 };
 
 template <class T>
@@ -38,11 +39,15 @@ PreProcess<T>::PreProcess(int n, vector<Destino> allDestinos, Destino orig){
 
 template <class T>
 void PreProcess<T>::getDestinations(vector<Destino> destinos){
+	vector<int> dates;
+	dates.push_back(0);
+
 	for(int i=0;i<num-1;i++){
 			bool added = false;
 			while(!added){
 				string tmp;
-				cin >> tmp;
+				int days;
+				cin >> tmp >> days;
 				/**
 				 * E A MESMA FUNCAO DO MAIN MAS NAO SEI COMO USAR EM DOIS FICHEIROS DISTINTOS
 				 */
@@ -63,11 +68,12 @@ void PreProcess<T>::getDestinations(vector<Destino> destinos){
 				else {
 					added = true;
 					locais.push_back(d);
+					dates.push_back(days);
 				}
 			}
 		}
-	for(auto l:locais)
-		newGraph.addVertex(l);
+	for(int i=0;i< locais.size();i++)
+		newGraph.addVertex(locais[i],dates[i]);
 }
 
 template <class T>
@@ -94,7 +100,6 @@ void PreProcess<T>::dijkstraAllPairs(Graph<T> graph){
 
 template <class T>
 bool PreProcess<T>::checkIfPossible(Destino origin){
-	bool hasRoute[num];
 	for(auto v : newGraph.getVertexSet())
 		v->visited = false;
 	Vertex<T> *src = newGraph.findVertex(origin);
@@ -118,6 +123,11 @@ bool PreProcess<T>::checkIfPossible(Destino origin){
 			return false;
 	}
 	return true;
+}
+
+template <class T>
+Graph<T> PreProcess<T>::getGraph() const{
+	return newGraph;
 }
 
 #endif

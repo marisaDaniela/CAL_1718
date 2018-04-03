@@ -1,7 +1,6 @@
-/*
- * Agencia.h
- *
- */
+#ifndef AGENCIA_H_
+#define AGENCIA_H_
+
 
 #include <string>
 #include <iostream>
@@ -34,4 +33,6 @@ public:
 	 */
 	double getCustoTempo(string data, int dias, string cidade);
 };
+
+#endif
 

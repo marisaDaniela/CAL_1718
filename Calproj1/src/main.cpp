@@ -40,13 +40,14 @@ int main(void) {
 	Graph<Destino> myGraph;
 
 	//Apenas para teste:
-	//Agencia a1;
+	Agencia a1;
 
-	//a1.leFicheiroAlojamentos("lisboa");
-//	a1.leFicheiroAlojamentos("berlim");
-//	a1.leFicheiroAlojamentos("bruxelas");
-//	a1.leFicheiroAlojamentos("madrid");
-//	a1.leFicheiroAlojamentos("amesterdao");
+	a1.leFicheiroAlojamentos("lisboa");
+	a1.leFicheiroAlojamentos("berlim");
+	a1.leFicheiroAlojamentos("bruxelas");
+	a1.leFicheiroAlojamentos("madrid");
+	a1.leFicheiroAlojamentos("amesterdao");
+	a1.leFicheiroAlojamentos("paris");
 //
 //	a1.verAlojamentos("lisboa");
 //	a1.verAlojamentos("berlim");
@@ -55,17 +56,18 @@ int main(void) {
 //	a1.verAlojamentos("amesterdao");
 //
 //
-	/*double custo = a1.getCustoTempo("30/06/2018",2,"Lisboa");
+	/*double custo = a1.getCustoTempo("30/06/2018",2,"Amesterdao");
 	cout << custo;
 	return 0;
 //	a1.getCustoTempo("11/11/2018",2,"lisboa");
 //	a1.getCustoTempo("04/07/2018",1,"amesterdao");
 //	a1.getCustoTempo("10/1/2019",7,"madrid");
 //	a1.getCustoTempo("12/11/2018",3,"berlim");
-
-	/*Alojamento a1;
-	a1.criaDatas("30/01/2018", "21/05/2018");
-	a1.showDatas();*/
+*/
+	/*Alojamento a;
+	a.criaDatas("30/01/2018", "21/05/2018");
+	a.showDatas();
+	return -1;*/
 
 	ficheiro.open("destinos.txt");
 	if(!ficheiro){
@@ -89,7 +91,7 @@ int main(void) {
 		Destino d1(nome, custo_alojamento);
 		destinos.push_back(d1);
 
-		myGraph.addVertex(d1);
+		myGraph.addVertex(d1,0);
 
 	}
 	ficheiro.close();
@@ -132,36 +134,25 @@ int main(void) {
 		return -1;
 	}
 
-	/*cout<< "->Where are you travelling to? Write the name of the city from the provided list."<<endl;
-	cin >> dest;
-	Destino d4 = getDestinoByName(destinos,dest);
-	if(d3.getName()==""){
-		cout << "That city does not belong to the available list..." <<endl;
-		return -1;
-	}
-	myGraph.dijkstraShortestPath(d3);
-
-	if(myGraph.getPath(d3, d4).size()==0){
-		cout << "Sorry! We have no route starting in " << orig <<" and ending in "<< dest<<endl;
-		return -2;
-	}
-
-	double tripCost = myGraph.getTripCost(d4);
-	cout << "The optimized route regarding cost (" << tripCost <<" �) is: ";
-	getSinglePath(myGraph, myGraph.getPath(d3, d4));
-	 */
-
-
 	int num = 0;
 	cout<< "->How many cities would you like to visit? ";
 	cin >> num;
-	cout<< "\nWrite the name of the cities from the provided list. <city1 city2 city3 ... cityN>"<<endl;
+	cout<< "\nWrite per line the name of the city from the provided list and the desired duration. "<<endl;
 	PreProcess<Destino> *p = new PreProcess<Destino>(num,destinos,d3);
 	p->dijkstraAllPairs(myGraph);
 	if(!p->checkIfPossible(d3))
 		cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
-	else
+	else{
+		string date1, date2;
+		cout<< "->Which would be the minimum starting date? (day/month/year) ";
+		cin >>date1;
+		cout<< "\n->Which would be the maximum final date? (day/month/year) ";
+		cin >>date2;
+		Graph<Destino> newGraph = p->getGraph();
+		//newGraph.dfs(d3,a1,date1, 10 );
+		newGraph.dfs(d3,a1,date1, date2 );
 		cout << "Currently trying to find the best price for those days. Wait a minute please..."<<endl;
+	}
 
 	cout<<"Program ended"<<endl;
 	return 0;

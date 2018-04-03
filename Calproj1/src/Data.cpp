@@ -4,21 +4,40 @@
 
 #include "Data.h"
 
+
+
 Data::Data(int dia, int mes, int ano) {
 	this->ano=ano;
 	this->mes=mes;
 	this->dia=dia;
+	buildString();
 }
 
 Data::Data(string dataStr) {
-	dia = stoi(dataStr.substr(0, 2));
-	mes = stoi(dataStr.substr(3, 4));
-	ano = stoi(dataStr.substr(6, 9));
 	setDataString(dataStr);
+	string delimiter = "/";
+	size_t pos = dataStr.find(delimiter);
+	dia = stoi(dataStr.substr(0, pos));
+	dataStr.erase(0, pos+1);
+	pos = dataStr.find(delimiter);
+	mes = stoi(dataStr.substr(0, pos));
+	dataStr.erase(0, pos+1);
+	pos = dataStr.find(delimiter);
+	ano = stoi(dataStr.substr(0, pos));
+	dataStr.erase(0, pos+1);
 }
 
 Data::~Data() {
 
+}
+
+void Data::buildString(){
+	string s = to_string(dia);
+	s += "/";
+	s += to_string(mes);
+	s += "/";
+	s += to_string(ano);
+	setDataString(s);
 }
 
 int Data::getAno() const {
@@ -63,4 +82,7 @@ bool Data::operator == (Data &rhs) const {
 	return (dia==rhs.dia && mes==rhs.mes && ano==rhs.ano);
 }
 
+bool Data::operator > (Data &rhs) const{
+	return (ano>rhs.ano || mes>rhs.mes || (dia>rhs.dia && mes==rhs.mes));
+}
 
