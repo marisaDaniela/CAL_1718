@@ -454,6 +454,7 @@ vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, int noite
 	Vertex<T> *src = findVertex(origin);
 	src->visited = true;
 
+
 	vector<Data*> datas = criaDatas(dataInicial, dataFinal(dataInicial,noites));
 
 	for(auto d:datas){
