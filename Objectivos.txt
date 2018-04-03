@@ -2,7 +2,7 @@ Objectivos:
 1)Criar ficheiros CSV para preços de alojamento por datas; (DONE)
 2)Criar class para ler e gravar os dados desses ficheiros; (DONE)
 2.1)Função que retorna o custo a partir do dia x (passado por argumento) durante
-y dias (passado por argumento) para uma determinada cidade (passado por argumento)
+y dias (passado por argumento) para uma determinada cidade (passado por argumento) (DONE)
 3)Pre-processamento dos locais a visitar (calculo do caminho minimo entre cada
 par de locais (DONE)
 4)Algoritmo pesquisa em profundidade (dfs) para obter a order entre os locais
