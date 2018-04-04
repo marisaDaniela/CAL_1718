@@ -11,18 +11,6 @@
 
 using namespace std;
 
-#define INF std::numeric_limits<double>::max()
-
-template <class T>
-void getSinglePath(Graph<T> &g, vector<T> path) {
-	for(unsigned int i = 0; i < path.size(); i++){
-		if(i==path.size()-1)
-			cout << path[i].getName() << endl;
-		else
-			cout << path[i].getName() << " -> ";
-	}
-}
-
 int main(void) {
 	ifstream ficheiro;
 	Graph<Destino> myGraph;
@@ -108,7 +96,8 @@ int main(void) {
 		cout<< "\n->Which would be the maximum final date? (day/month/year) ";
 		cin >>date2;
 		Graph<Destino> newGraph = p->getGraph();
-		newGraph.dfs(d3,a1,date1,date2);
+		newGraph.setAgencia(a1);
+		newGraph.dfs(d3,date1,date2);
 	}
 
 	cout<<"Program ended"<<endl;
