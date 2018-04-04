@@ -2,14 +2,7 @@
 #define AGENCIA_H_
 
 
-#include <string>
-#include <iostream>
-#include <string>
 #include <fstream>
-#include <sstream>
-#include <vector>
-#include <cstdlib>
-
 #include "Alojamento.h"
 
 using namespace std;

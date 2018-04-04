@@ -35,11 +35,9 @@ void Agencia::leFicheiroAlojamentos(string nomeCidade) {
 		getline(i2, dataFim, ',');
 		getline(i2, custoS, ',');
 
-		Data d1(dataInicio);
-		Data d2(dataFim);
 		custo = atof(custoS.c_str());
 
-		Alojamento *a = new Alojamento(cidade, d1, d2, custo);
+		Alojamento *a = new Alojamento(cidade, custo);
 		a->criaDatas(dataInicio,dataFim);
 
 		if(nomeCidade == "amesterdao")

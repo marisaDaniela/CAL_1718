@@ -5,11 +5,9 @@
 
 #include "Alojamento.h"
 
-Alojamento::Alojamento(string cidade, Data dataInicio, Data dataFim, double custo) {
-	this->cidade = cidade;
-	this->dataInicio = dataInicio;
-	this->dataFim = dataFim;
-	this->custo = custo;
+Alojamento::Alojamento(string cidade, double custo) {
+	setCidade(cidade);
+	setCusto(custo);
 }
 
 string Alojamento::getCidade() const {
@@ -26,22 +24,6 @@ double Alojamento::getCusto() const {
 
 void Alojamento::setCusto(double custo) {
 	this->custo = custo;
-}
-
-Data Alojamento::getDataFim() const {
-	return dataFim;
-}
-
-void Alojamento::setDataFim(Data dataFim) {
-	this->dataFim = dataFim;
-}
-
-Data Alojamento::getDataInicio() const {
-	return dataInicio;
-}
-
-void Alojamento::setDataInicio(Data dataInicio) {
-	this->dataInicio = dataInicio;
 }
 
 Alojamento::~Alojamento() {
@@ -61,7 +43,6 @@ void Alojamento::criaDatas(string d1, string d2) {
 
 	bool stop = false;
 
-
 	while(!stop)
 	{
 		Data *d1 = new Data(dia, mes, dataInicio.getAno());
@@ -77,12 +58,9 @@ void Alojamento::criaDatas(string d1, string d2) {
 			else
 				mes = 1;
 			num = numDias(mes, dataInicio.getAno());
-
 		}
 		dia++;
 	}
-
-	//showDatas();
 }
 
 void Alojamento::showDatas() {
@@ -90,10 +68,9 @@ void Alojamento::showDatas() {
 		cout << datas[i]->getDia() <<"/" << datas[i]->getMes() <<"/" << datas[i]->getAno() << endl;
 	}
 }
+
 ostream& operator<<(ostream& out, const Alojamento &a) {
 	out << "Cidade " << a.getCidade() << endl;
-	out << "DataInicio: " << a.getDataInicio()<< endl;
-	out << "DataFim: " << a.getDataFim() << endl;
 	out << "Custo " << a.getCusto() << endl;
 
 	return out;
