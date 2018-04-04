@@ -8,13 +8,14 @@ using namespace std;
 class Data {
 	int dia, mes, ano;
 	string dataString;
+
+	int getValue(string &dataStr);
 public:
-	Data(){};
 	Data(int dia, int mes, int ano);
 	virtual ~Data();
 	Data(string data); // data na forma DD/MM/AAA
 
-	void buildString();
+	void buildString(int dia, int mes, int ano);
 
 	int getAno() const;
 	void setAno(int ano);

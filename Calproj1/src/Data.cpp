@@ -5,33 +5,34 @@
 #include "Data.h"
 
 
-
 Data::Data(int dia, int mes, int ano) {
-	this->ano=ano;
-	this->mes=mes;
-	this->dia=dia;
-	buildString();
+	setAno(ano);
+	setMes(mes);
+	setDia(dia);
+	buildString(dia,mes,ano);
 }
 
 Data::Data(string dataStr) {
 	setDataString(dataStr);
-	string delimiter = "/";
-	size_t pos = dataStr.find(delimiter);
-	dia = stoi(dataStr.substr(0, pos));
-	dataStr.erase(0, pos+1);
-	pos = dataStr.find(delimiter);
-	mes = stoi(dataStr.substr(0, pos));
-	dataStr.erase(0, pos+1);
-	pos = dataStr.find(delimiter);
-	ano = stoi(dataStr.substr(0, pos));
-	dataStr.erase(0, pos+1);
+	setDia(getValue(dataStr));
+	setMes(getValue(dataStr));
+	setAno(getValue(dataStr));
 }
 
 Data::~Data() {
 
 }
 
-void Data::buildString(){
+int Data::getValue(string &dataStr){
+	int value = 0;
+	string delimiter = "/";
+	size_t pos = dataStr.find(delimiter);
+	value = stoi(dataStr.substr(0, pos));
+	dataStr.erase(0, pos+1);
+	return value;
+}
+
+void Data::buildString(int dia, int mes, int ano){
 	string s = to_string(dia);
 	s += "/";
 	s += to_string(mes);

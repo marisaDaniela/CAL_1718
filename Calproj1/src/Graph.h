@@ -291,56 +291,35 @@ vector<Data*> criaDatas(string d1, string d2) {
 
 
 string dataFinal(string dataInicio, int duration){
-	string delimiter = "/";
-	size_t pos = dataInicio.find(delimiter);
-	int dia = stoi(dataInicio.substr(0, pos));
-	dataInicio.erase(0, pos+1);
-	pos = dataInicio.find(delimiter);
-	int mes = stoi(dataInicio.substr(0, pos));
-	dataInicio.erase(0, pos+1);
-	pos = dataInicio.find(delimiter);
-	int ano = stoi(dataInicio.substr(0, pos));
-	dataInicio.erase(0, pos+1);
+	Data d = Data(dataInicio);
 
-	int diasMes = numDias(mes,ano);
-	int result = dia+duration;
+	int diasMes = numDias(d.getMes(),d.getAno());
+	int result = d.getDia()+duration;
 	if(result>diasMes){
 		result -= diasMes;
-		mes++;
+		int mes = d.getMes()+1;
+		d.setMes(mes);
 	}
-	string dataFinal = to_string(result);
-	dataFinal += "/";
-	dataFinal += to_string(mes);
-	dataFinal += "/";
-	dataFinal += to_string(ano);
 
-	return dataFinal;
+	d.buildString(result,d.getMes(),d.getAno());
+
+	return d.getDataString();
 }
 
 string maxPossibleStartDate(int noites, string maxDataFinal){
-	string delimiter = "/";
-	size_t pos = maxDataFinal.find(delimiter);
-	int dia = stoi(maxDataFinal.substr(0, pos));
-	maxDataFinal.erase(0, pos+1);
-	pos = maxDataFinal.find(delimiter);
-	int mes = stoi(maxDataFinal.substr(0, pos));
-	maxDataFinal.erase(0, pos+1);
-	pos = maxDataFinal.find(delimiter);
-	int ano = stoi(maxDataFinal.substr(0, pos));
-	maxDataFinal.erase(0, pos+1);
+	Data d = Data(maxDataFinal);
 
-	int diasMes = numDias(mes-1,ano);
-	int result = dia-noites;
-	if(result<=0)
-		result = diasMes - result;
+	int diasMes = numDias(d.getMes()-1,d.getAno());
+	int result = d.getDia()-noites;
+	if(result<=0){
+		result = diasMes + result;
+		int mes = d.getMes()-1;
+		d.setMes(mes);
+	}
 
-	string dataFinal = to_string(result);
-	dataFinal += "/";
-	dataFinal += to_string(mes);
-	dataFinal += "/";
-	dataFinal += to_string(ano);
+	d.buildString(result,d.getMes(),d.getAno());
 
-	return dataFinal;
+	return d.getDataString();
 }
 
 /*
