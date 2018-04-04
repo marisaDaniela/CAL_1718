@@ -42,3 +42,68 @@ Destino getDestinoByName(const vector<Destino> vec, string name){
 	}
 	return dest;
 }
+
+vector<Data*> criaDatas(string d1, string d2) {
+	vector<Data*> datas;
+	Data dataInicio = Data(d1);
+	Data dataFim = Data(d2);
+
+	int dia = dataInicio.getDia();
+	int mes = dataInicio.getMes();
+	int num = numDias(mes, dataInicio.getAno());
+
+	bool stop = false;
+
+
+	while(!stop){
+		Data *d1 = new Data(dia, mes, dataInicio.getAno());
+		datas.push_back(d1);
+		if(stop)
+			break;
+		if(dia==dataFim.getDia() && mes==dataFim.getMes())
+			stop = true;
+		if(dia == num) {
+			dia = 0;
+			if(mes < 12)
+				mes++;
+			else
+				mes = 1;
+			num = numDias(mes, dataInicio.getAno());
+
+		}
+		dia++;
+	}
+	return datas;
+}
+
+string dataFinal(string dataInicio, int duration){
+	Data d = Data(dataInicio);
+
+	int diasMes = numDias(d.getMes(),d.getAno());
+	int result = d.getDia()+duration;
+	if(result>diasMes){
+		result -= diasMes;
+		int mes = d.getMes()+1;
+		d.setMes(mes);
+	}
+
+	d.buildString(result,d.getMes(),d.getAno());
+
+	return d.getDataString();
+}
+
+string maxPossibleStartDate(int noites, string maxDataFinal){
+	Data d = Data(maxDataFinal);
+
+	int diasMes = numDias(d.getMes()-1,d.getAno());
+	int result = d.getDia()-noites;
+	if(result<=0){
+		result = diasMes + result;
+		int mes = d.getMes()-1;
+		d.setMes(mes);
+	}
+
+	d.buildString(result,d.getMes(),d.getAno());
+
+	return d.getDataString();
+}

@@ -9,6 +9,7 @@
 #include "MutablePriorityQueue.h"
 
 #include "Agencia.h"
+#include "auxFunctions.h"
 
 using namespace std;
 
@@ -27,13 +28,12 @@ class Vertex {
 	double custo = 0;
 	Vertex<T> *path = NULL;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
+	int duration = 0;
 
-	bool processing = false;
 	void addEdge(Vertex<T> *dest, double w);
 
 public:
 	bool visited;          // auxiliary field
-	int duration = 0;
 	Vertex(T in);
 	Vertex(T in, int d);
 	bool operator<(Vertex<T> & vertex) const; // // required by MutablePriorityQueue
@@ -118,28 +118,31 @@ double Edge<T>::getCusto() const{
 template <class T>
 class Graph {
 	vector<Vertex<T> *> vertexSet;    // vertex set
-
-public:
 	vector<T> order;
+	vector<string> startDate;
+	Agencia agencia;
 	double cost = 0;
 	double bestCost;
-	vector<string> startDate;
+
+	bool allVisited() const;
+	void dfsVisit(Vertex<T> *v, vector<T> & res,vector<string> & dates, Vertex<T> *src, string dataInicial);
+	void printResult(string origin) const;
+
+public:
 	Vertex<T> *findVertex(const T &in) const;
 	bool addVertex(const T &in, int duration);
 	bool addEdge(const T &sourc, const T &dest, double w);
+
 	int getNumVertex() const;
 	vector<Vertex<T> *> getVertexSet() const;
 	double getTripCost(const T &in) const;
 
-	// Fp05 - single source
+	void setAgencia(Agencia a);
+
 	void dijkstraShortestPath(const T &s);
 	vector<T> getPath(const T &origin, const T &dest) const;
 
-	vector<T> dfs(Destino origin, Agencia a, string dataInicial, int noites);
-	void dfsVisit(Vertex<T> *v, vector<T> & res, vector<string> & dates, Vertex<T> *src, Agencia a, string dataInicial );
-	vector<T> dfs(Destino origin, Agencia a, string dataInicial, string maxDataFinal);
-	bool allVisited() const;
-
+	vector<T> dfs(Destino origin, string dataInicial, string maxDataFinal);
 };
 
 template <class T>
@@ -198,8 +201,11 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 	return true;
 }
 
+template <class T>
+void Graph<T>::setAgencia(Agencia a){
+	this->agencia = a;
+}
 
-/**************** Single Source Shortest Path algorithms ************/
 
 template<class T>
 void Graph<T>::dijkstraShortestPath(const T &origin) {
@@ -251,73 +257,6 @@ vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
 	return res;
 }
 
-
-vector<Data*> criaDatas(string d1, string d2) {
-	vector<Data*> datas;
-	Data dataInicio = Data(d1);
-	Data dataFim = Data(d2);
-
-	int dia = dataInicio.getDia();
-	int mes = dataInicio.getMes();
-	int num = numDias(mes, dataInicio.getAno());
-
-	bool stop = false;
-
-
-	while(!stop){
-		Data *d1 = new Data(dia, mes, dataInicio.getAno());
-		datas.push_back(d1);
-		if(stop)
-			break;
-		if(dia==dataFim.getDia() && mes==dataFim.getMes())
-			stop = true;
-		if(dia == num) {
-			dia = 0;
-			if(mes < 12)
-				mes++;
-			else
-				mes = 1;
-			num = numDias(mes, dataInicio.getAno());
-
-		}
-		dia++;
-	}
-	return datas;
-}
-
-
-string dataFinal(string dataInicio, int duration){
-	Data d = Data(dataInicio);
-
-	int diasMes = numDias(d.getMes(),d.getAno());
-	int result = d.getDia()+duration;
-	if(result>diasMes){
-		result -= diasMes;
-		int mes = d.getMes()+1;
-		d.setMes(mes);
-	}
-
-	d.buildString(result,d.getMes(),d.getAno());
-
-	return d.getDataString();
-}
-
-string maxPossibleStartDate(int noites, string maxDataFinal){
-	Data d = Data(maxDataFinal);
-
-	int diasMes = numDias(d.getMes()-1,d.getAno());
-	int result = d.getDia()-noites;
-	if(result<=0){
-		result = diasMes + result;
-		int mes = d.getMes()-1;
-		d.setMes(mes);
-	}
-
-	d.buildString(result,d.getMes(),d.getAno());
-
-	return d.getDataString();
-}
-
 /*
  * Performs a depth-first search (dfs) in a graph (this).
  * Returns a vector with the contents of the vertices by dfs order.
@@ -325,7 +264,7 @@ string maxPossibleStartDate(int noites, string maxDataFinal){
  */
 
 template <class T>
-vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, string maxDataFinal){
+vector<T> Graph<T>::dfs(Destino origin, string dataInicial, string maxDataFinal){
 	bestCost = INF;
 	vector<T> res;
 	vector<string> dates;
@@ -339,44 +278,14 @@ vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, string ma
 	src->visited = true;
 
 	string maxStartDate = maxPossibleStartDate(noites,maxDataFinal);
+	vector<Data*> allDatas = criaDatas(dataInicial, maxStartDate);
 
-	vector<Data*> datas = criaDatas(dataInicial, maxStartDate);
-
-	for(auto d:datas){
+	for(auto d : allDatas){
 		dataInicial = d->getDataString();
-		for(Edge<T> w : src->adj){
-			if(!w.getDest()->visited){
-				Vertex<T> *dest = w.getDest();
-				Destino d = dest->getInfo();
-				/*cost += w.getCusto();
-				cout << "viagem: " << cost << endl;
-				cost += a.getCustoTempo(dataInicial,dest->duration,d.getName());
-				cout << "estadia: " << cost << endl;*/
-				cost += w.getCusto() + a.getCustoTempo(dataInicial,dest->duration,d.getName());
-				res.push_back(d);
-				dates.push_back(dataInicial);
-				//cout << a.getCustoTempo(dataInicial,dest->duration,d.getName()) << dataInicial << ","<< dest->duration << d.getName() <<  endl;
-				//cout << "Add: " << d.getName()<< ", currentCost = "<< cost << endl;
-				dfsVisit(w.getDest(),res,dates,src, a, dataFinal(dataInicial, dest->duration));
-				(w.getDest())->visited = false;
-				cost -= w.getCusto() + a.getCustoTempo(dataInicial,dest->duration,d.getName());
-				res.pop_back();
-				dates.pop_back();
-			}
-
-		}
+		dfsVisit(src,res,dates,src, dataFinal(dataInicial, src->duration));
 	}
-	if(bestCost==INF){
-		cout << "We are sorry to inform that there is no route available for that trip..."<<endl;
-		return res;
-	}
-	cout << "BestCost: " << bestCost<<endl;
-	cout << "StartDate: " << startDate[0]<<endl;
 
-	cout << origin.getName() << "->";
-	for(auto l:order)
-		cout << l.getName()<< "->";
-	cout<<endl;
+	printResult(origin.getName());
 	return res;
 }
 
@@ -386,27 +295,21 @@ vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, string ma
  * Updates a parameter with the list of visited node contents.
  */
 template <class T>
-void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res,vector<string> & dates, Vertex<T> *src, Agencia a, string dataInicial){
+void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> &res,vector<string> &dates, Vertex<T> *src, string dataInicial){
 	if(cost>bestCost)
 		return;
 	v->visited = true;
 	bool srcHere = false;
 	double aux = 0;
 	for(auto w : v->adj){
-		Vertex<T> *dest = w.getDest();
-		Destino d = dest->getInfo();
 		if(!w.getDest()->visited){
-			/*cost += w.getCusto();
-			cout << "viagem: " << cost << endl;
-			cost += a.getCustoTempo(dataInicial,dest->duration,d.getName());
-			cout << "estadia: " << cost << endl;*/
-			cost += w.getCusto() + a.getCustoTempo(dataInicial,dest->duration,d.getName());
+			Destino d = w.getDest()->getInfo();
+			cost += w.getCusto() + agencia.getCustoTempo(dataInicial,w.getDest()->duration,d.getName());
 			res.push_back(d);
 			dates.push_back(dataInicial);
-			//cout << "->Add: " << d.getName()<< ", currentCost = "<< cost << endl;
-			dfsVisit(w.getDest(),res,dates,src, a, dataFinal(dataInicial, dest->duration));
+			dfsVisit(w.getDest(),res,dates,src, dataFinal(dataInicial, w.getDest()->duration));
 			(w.getDest())->visited = false;
-			cost -= w.getCusto() + a.getCustoTempo(dataInicial,dest->duration,d.getName());
+			cost -= w.getCusto() + agencia.getCustoTempo(dataInicial,w.getDest()->duration,d.getName());
 			res.pop_back();
 			dates.pop_back();
 		}
@@ -434,7 +337,23 @@ bool Graph<T>::allVisited() const {
 }
 
 
+template <class T>
+void Graph<T>::printResult(string origin) const{
+	if(bestCost==INF){
+		cout << "We are sorry to inform that there is no route available for that trip..."<<endl;
+		return;
+	}
+	cout << "BestCost: " << bestCost<<endl;
+	cout << "StartDate: " << startDate[0]<<endl;
 
+	cout << origin << "->";
+	for(int i=0;i<order.size();i++){
+		if(i==order.size()-1)
+			cout << order[i].getName()<<endl;
+		else
+			cout << order[i].getName()<< "->";
+	}
+}
 
 
 #endif /* GRAPH_H_ */

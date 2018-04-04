@@ -23,10 +23,10 @@ public:
 	double getCusto() const;
 	void setCusto(double custo);
 
-	void criaDatas(string dataInicio, string dataFim);
 	void showDatas();
 
 	vector<Data*> getDatas() const;
+	void setDatas(vector<Data*> vec);
 
 	friend ostream& operator<<(ostream& out, const Alojamento &a);
 };

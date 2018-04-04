@@ -33,34 +33,8 @@ vector<Data*> Alojamento::getDatas() const {
 	return datas;
 }
 
-void Alojamento::criaDatas(string d1, string d2) {
-	Data dataInicio = Data(d1);
-	Data dataFim = Data(d2);
-
-	int dia = dataInicio.getDia();
-	int mes = dataInicio.getMes();
-	int num = numDias(mes, dataInicio.getAno());
-
-	bool stop = false;
-
-	while(!stop)
-	{
-		Data *d1 = new Data(dia, mes, dataInicio.getAno());
-		datas.push_back(d1);
-		if(stop)
-			break;
-		if(dia==dataFim.getDia() && mes==dataFim.getMes())
-			stop = true;
-		if(dia == num) {
-			dia = 0;
-			if(mes < 12)
-				mes++;
-			else
-				mes = 1;
-			num = numDias(mes, dataInicio.getAno());
-		}
-		dia++;
-	}
+void Alojamento::setDatas(vector<Data*> vec){
+	this->datas = vec;
 }
 
 void Alojamento::showDatas() {

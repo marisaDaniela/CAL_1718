@@ -1,6 +1,10 @@
 /*
  * Data.h
  */
+
+#ifndef DATA_H_
+#define DATA_H_
+
 #include <string>
 
 using namespace std;
@@ -35,3 +39,4 @@ public:
 
 };
 
+#endif
