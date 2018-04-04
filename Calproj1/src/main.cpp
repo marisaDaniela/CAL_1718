@@ -53,11 +53,46 @@ void multiplePlaces(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1)
 	}
 
 	cout<<"\nProgram ended!"<<endl;
-	exit(0);
+	return;
 };
-void directTravel(){
-	//TODO:
-	cout << "Viagem apenas de origem e destino? Sem considerar o numero de places xb\n";
+void directTravel(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
+	cout << "The cities presented in our travel agency are listed below:\n"<<endl;
+		for(int i=0;i<destinos.size();i++){
+			if(i==destinos.size()-1)
+				cout<< destinos[i].getName() << endl;
+			else
+				cout<<" - " <<destinos[i].getName() << "\n";
+		}
+
+		string orig, dest;
+		cout<< "-> Where are you travelling from? Write the name of the city from the provided list."<<endl;
+		cin >> orig;
+		Destino d3 = getDestinoByName(destinos,orig);
+		if(d3.getName()==""){
+			cout << "That city does not belong to the available list..." <<endl;
+			return;
+		}
+
+		int num = 1;
+
+		cout<< "\n-> Where are you travelling for? Write the name of the city from the provided list and the desired duration. "<<endl;
+		PreProcess<Destino> *p = new PreProcess<Destino>(myGraph,num,destinos,d3);
+		if(!p->checkIfPossible(d3))
+			cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
+		else{
+			string date1, date2;
+			cout<< "-> Which would be the minimum starting date? (day/month/year) ";
+			cin >>date1;
+			cout<< "\n-> Which would be the maximum final date? (day/month/year) ";
+			cin >>date2;
+			cout << endl;
+			Graph<Destino> newGraph = p->getGraph();
+			newGraph.setAgencia(a1);
+			newGraph.dfs(d3,date1,date2);
+		}
+
+		cout<<"\nProgram ended!"<<endl;
+		return;
 };
 
 void pause()
@@ -91,7 +126,7 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	{
 	case 1:
 	{
-		directTravel();
+		directTravel(destinos,myGraph,a1);
 	}break;
 	case 2:
 	{
