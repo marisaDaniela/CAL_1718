@@ -60,30 +60,31 @@ void Agencia::leFicheiroAlojamentos(string nomeCidade) {
 
 }
 
-void Agencia::verAlojamentos(string nomeCidade) {
+vector<Alojamento *> Agencia::getCityVector(string nomeCidade) const{
 	vector<Alojamento *> a;
-	if(nomeCidade == "amesterdao")
+	if(nomeCidade == "Amesterdao")
 		a = amesterdao;
-	else if(nomeCidade == "berlim")
+	else if(nomeCidade == "Berlim")
 		a = berlim;
-	else if(nomeCidade == "bruxelas")
+	else if(nomeCidade == "Bruxelas")
 		a = bruxelas;
-	else if(nomeCidade == "lisboa")
+	else if(nomeCidade == "Lisboa")
 		a = lisboa;
-	else if(nomeCidade == "madrid")
+	else if(nomeCidade == "Madrid")
 		a = madrid;
-	else if(nomeCidade == "paris")
+	else if(nomeCidade == "Paris")
 		a = paris;
-	else if(nomeCidade == "praga")
+	else if(nomeCidade == "Praga")
 		a = praga;
-
-	for (int i = 0; i < a.size(); i++)
-	{
-		cout << *(a[i]) << endl;
-	}
+	return a;
 }
 
+void Agencia::verAlojamentos(string nomeCidade) {
+	vector<Alojamento *> a = getCityVector(nomeCidade);
 
+	for (int i = 0; i < a.size(); i++)
+		cout << *(a[i]) << endl;
+}
 
 
 double Agencia::getCustoTempo(string data, int dias, string cidade) {
@@ -92,22 +93,8 @@ double Agencia::getCustoTempo(string data, int dias, string cidade) {
 	double custo = 0;
 	int daysleft = 0;
 	bool start = false;
-	vector<Alojamento *> city;
 
-	if(cidade=="Amesterdao")
-		city = amesterdao;
-	else if(cidade=="Berlim")
-		city = berlim;
-	else if(cidade=="Bruxelas")
-		city = bruxelas;
-	else if(cidade=="Lisboa")
-		city = lisboa;
-	else if(cidade=="Madrid")
-		city = madrid;
-	else if(cidade=="Paris")
-		city = paris;
-	else if(cidade=="Praga")
-		city = praga;
+	vector<Alojamento *> city = getCityVector(cidade);
 
 	bool done = false;
 

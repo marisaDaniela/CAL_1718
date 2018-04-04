@@ -23,7 +23,9 @@ class Agencia {
 	vector<Alojamento *> madrid;
 	vector<Alojamento *> paris;
 	vector<Alojamento *> praga;
+
 	void leFicheiroAlojamentos(string nomeCidade);
+	vector<Alojamento *> getCityVector(string nomeCidade) const;
 public:
 	void leFicheiros();
 	void verAlojamentos(string nomeCidade);
