@@ -38,37 +38,8 @@ void getSinglePath(Graph<T> &g, vector<T> path) {
 int main(void) {
 	ifstream ficheiro;
 	Graph<Destino> myGraph;
-
-	//Apenas para teste:
 	Agencia a1;
-
-	a1.leFicheiroAlojamentos("lisboa");
-	a1.leFicheiroAlojamentos("berlim");
-	a1.leFicheiroAlojamentos("bruxelas");
-	a1.leFicheiroAlojamentos("madrid");
-	a1.leFicheiroAlojamentos("amesterdao");
-	a1.leFicheiroAlojamentos("paris");
-	a1.leFicheiroAlojamentos("praga");
-//
-//	a1.verAlojamentos("lisboa");
-//	a1.verAlojamentos("berlim");
-//	a1.verAlojamentos("bruxelas");
-//	a1.verAlojamentos("madrid");
-//	a1.verAlojamentos("amesterdao");
-//
-//
-	/*double custo = a1.getCustoTempo("30/06/2018",2,"Amesterdao");
-	cout << custo;
-	return 0;
-//	a1.getCustoTempo("11/11/2018",2,"lisboa");
-//	a1.getCustoTempo("04/07/2018",1,"amesterdao");
-//	a1.getCustoTempo("10/1/2019",7,"madrid");
-//	a1.getCustoTempo("12/11/2018",3,"berlim");
-*/
-	/*Alojamento a;
-	a.criaDatas("30/01/2018", "21/05/2018");
-	a.showDatas();
-	return -1;*/
+	a1.leFicheiros();
 
 	ficheiro.open("destinos.txt");
 	if(!ficheiro){
@@ -150,9 +121,7 @@ int main(void) {
 		cout<< "\n->Which would be the maximum final date? (day/month/year) ";
 		cin >>date2;
 		Graph<Destino> newGraph = p->getGraph();
-		//newGraph.dfs(d3,a1,date1, 10 );
 		newGraph.dfs(d3,a1,date1, date2 );
-		cout << "Currently trying to find the best price for those days. Wait a minute please..."<<endl;
 	}
 
 	cout<<"Program ended"<<endl;

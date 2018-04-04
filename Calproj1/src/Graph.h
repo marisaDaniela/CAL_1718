@@ -375,6 +375,11 @@ string maxPossibleStartDate(int noites, string maxDataFinal){
 	return dataFinal;
 }
 
+/*
+ * Performs a depth-first search (dfs) in a graph (this).
+ * Returns a vector with the contents of the vertices by dfs order.
+ * Follows the algorithm described in theoretical classes.
+ */
 
 template <class T>
 vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, string maxDataFinal){
@@ -391,19 +396,11 @@ vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, string ma
 	src->visited = true;
 
 	string maxStartDate = maxPossibleStartDate(noites,maxDataFinal);
-	Data dataMax = Data(maxStartDate);
 
 	vector<Data*> datas = criaDatas(dataInicial, maxStartDate);
-	cout << maxStartDate<<endl;
 
 	for(auto d:datas){
 		dataInicial = d->getDataString();
-		Data atual = Data(dataInicial);
-		if(atual>dataMax){
-			cout << "UPS- ---" << dataInicial<<endl;
-			break;
-		}
-		cout <<dataInicial<<endl;
 		for(Edge<T> w : src->adj){
 			if(!w.getDest()->visited){
 				Vertex<T> *dest = w.getDest();
@@ -426,63 +423,10 @@ vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, string ma
 
 		}
 	}
-	cout << "cost: " << cost<<endl;
-	cout << "BestCost: " << bestCost<<endl;
-	cout << "StartDate: " << startDate[0]<<endl;
-
-	cout << origin.getName() << "->";
-	for(auto l:order)
-		cout << l.getName()<< "->";
-	cout<<endl;
-	return res;
-}
-
-
-/*
- * Performs a depth-first search (dfs) in a graph (this).
- * Returns a vector with the contents of the vertices by dfs order.
- * Follows the algorithm described in theoretical classes.
- */
-template <class T>
-vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, int noites){
-	bestCost = INF;
-	vector<T> res;
-	vector<string> dates;
-	for(auto v : vertexSet)
-		v->visited = false;
-
-	Vertex<T> *src = findVertex(origin);
-	src->visited = true;
-
-
-	vector<Data*> datas = criaDatas(dataInicial, dataFinal(dataInicial,noites));
-
-	for(auto d:datas){
-		dataInicial = d->getDataString();
-		cout <<dataInicial<<endl;
-		for(Edge<T> w : src->adj){
-			if(!w.getDest()->visited){
-				Vertex<T> *dest = w.getDest();
-				Destino d = dest->getInfo();
-				/*cost += w.getCusto();
-				cout << "viagem: " << cost << endl;
-				cost += a.getCustoTempo(dataInicial,dest->duration,d.getName());
-				cout << "estadia: " << cost << endl;*/
-				cost += w.getCusto() + a.getCustoTempo(dataInicial,dest->duration,d.getName());
-				res.push_back(d);
-				dates.push_back(dataInicial);
-				//cout << a.getCustoTempo(dataInicial,dest->duration,d.getName()) << dataInicial << ","<< dest->duration << d.getName() <<  endl;
-				//cout << "Add: " << d.getName()<< ", currentCost = "<< cost << endl;
-				dfsVisit(w.getDest(),res,dates,src, a, dataFinal(dataInicial, dest->duration));
-				(w.getDest())->visited = false;
-				cost -= w.getCusto() + a.getCustoTempo(dataInicial,dest->duration,d.getName());
-				res.pop_back();
-				dates.pop_back();
-			}
-
-		}
+	if(bestCost==INF){
+		cout << "We are sorry to inform that there is no route available for that trip..."<<endl;
+		return res;
 	}
-	cout << "cost: " << cost<<endl;
 	cout << "BestCost: " << bestCost<<endl;
 	cout << "StartDate: " << startDate[0]<<endl;
 
@@ -492,6 +436,7 @@ vector<T> Graph<T>::dfs(Destino origin, Agencia a, string dataInicial, int noite
 	cout<<endl;
 	return res;
 }
+
 
 /*
  * Auxiliary function that visits a vertex (v) and its adjacent not yet visited, recursively.
@@ -507,7 +452,6 @@ void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res,vector<string> & dates, Ve
 	for(auto w : v->adj){
 		Vertex<T> *dest = w.getDest();
 		Destino d = dest->getInfo();
-		cout << "***Add: " << d.getName()<< endl;
 		if(!w.getDest()->visited){
 			/*cost += w.getCusto();
 			cout << "viagem: " << cost << endl;

@@ -23,14 +23,10 @@ class Agencia {
 	vector<Alojamento *> madrid;
 	vector<Alojamento *> paris;
 	vector<Alojamento *> praga;
-public:
 	void leFicheiroAlojamentos(string nomeCidade);
+public:
+	void leFicheiros();
 	void verAlojamentos(string nomeCidade);
-
-	/**
-	 *  Função que retorna o custo a partir do dia x (passado por argumento) durante
-	 *  y dias (passado por argumento) para uma determinada cidade (passado por argumento)
-	 */
 	double getCustoTempo(string data, int dias, string cidade);
 };
 

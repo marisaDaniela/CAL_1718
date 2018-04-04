@@ -5,6 +5,16 @@
 
 #include "Agencia.h"
 
+void Agencia::leFicheiros(){
+	leFicheiroAlojamentos("lisboa");
+	leFicheiroAlojamentos("berlim");
+	leFicheiroAlojamentos("bruxelas");
+	leFicheiroAlojamentos("madrid");
+	leFicheiroAlojamentos("amesterdao");
+	leFicheiroAlojamentos("paris");
+	leFicheiroAlojamentos("praga");
+}
+
 void Agencia::leFicheiroAlojamentos(string nomeCidade) {
 	string line;
 	ifstream ficheiro;
