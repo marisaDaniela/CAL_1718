@@ -1,8 +1,7 @@
 #ifndef PREPROCESS_H_
 #define PREPROCESS_H_
 
-#include <vector>
-#include <iostream>
+#include <queue>
 #include "Destino.h"
 #include "Graph.h"
 
@@ -14,27 +13,23 @@ template <class T>
 class PreProcess{
 	Graph<T> newGraph;
 	int num;
-public:
 	vector<Destino> locais;
-	PreProcess (int n, vector<Destino> allDestinos);
-	PreProcess (int n, vector<Destino> allDestinos, Destino orig);
+
 	void getDestinations(vector<Destino>) ;
-	void dijkstraAllPairs( Graph<T> graph);
+	void dijkstraAllPairs(Graph<T> graph);
+public:
+	PreProcess (Graph<T> old, int n, vector<Destino> allDestinos, Destino orig);
 	bool checkIfPossible(Destino origin);
 	Graph<T> getGraph() const;
+	vector<Destino> getLocais() const;
 };
 
 template <class T>
-PreProcess<T>::PreProcess(int n, vector<Destino> allDestinos){
-	num = n;
-	getDestinations(allDestinos);
-}
-
-template <class T>
-PreProcess<T>::PreProcess(int n, vector<Destino> allDestinos, Destino orig){
+PreProcess<T>::PreProcess(Graph<T> old, int n, vector<Destino> allDestinos, Destino orig){
 	num = n + 1;
 	locais.push_back(orig);
 	getDestinations(allDestinos);
+	dijkstraAllPairs(old);
 }
 
 template <class T>
@@ -110,6 +105,11 @@ bool PreProcess<T>::checkIfPossible(Destino origin){
 template <class T>
 Graph<T> PreProcess<T>::getGraph() const{
 	return newGraph;
+}
+
+template <class T>
+vector<Destino> PreProcess<T>::getLocais() const{
+	return locais;
 }
 
 #endif

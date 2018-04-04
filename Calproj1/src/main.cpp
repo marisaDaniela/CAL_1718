@@ -98,8 +98,7 @@ int main(void) {
 	cout<< "->How many cities would you like to visit? ";
 	cin >> num;
 	cout<< "\nWrite per line the name of the city from the provided list and the desired duration. "<<endl;
-	PreProcess<Destino> *p = new PreProcess<Destino>(num,destinos,d3);
-	p->dijkstraAllPairs(myGraph);
+	PreProcess<Destino> *p = new PreProcess<Destino>(myGraph,num,destinos,d3);
 	if(!p->checkIfPossible(d3))
 		cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
 	else{
@@ -109,7 +108,7 @@ int main(void) {
 		cout<< "\n->Which would be the maximum final date? (day/month/year) ";
 		cin >>date2;
 		Graph<Destino> newGraph = p->getGraph();
-		newGraph.dfs(d3,a1,date1, date2 );
+		newGraph.dfs(d3,a1,date1,date2);
 	}
 
 	cout<<"Program ended"<<endl;
