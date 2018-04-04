@@ -256,38 +256,6 @@ vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
 }
 
 
-
-
-bool isBissexto(int ano) {
-		if(((ano % 4 == 0) && (ano % 100 != 0)) || (ano % 400 == 0))
-			return true;
-			else
-				return false;
-	}
-
-int numDias(int mes, int ano){
-	int num = 0;
-	switch(mes){
-	case 1:
-	case 3:
-	case 5:
-	case 7:
-	case 8:
-	case 10:
-	case 12:
-		num = 31;
-		break;
-	case 2:
-		if(isBissexto(ano))
-			num = 29;
-		else num = 28;
-		break;
-	default:
-		num = 30;
-	}
-	return num;
-}
-
 vector<Data*> criaDatas(string d1, string d2) {
 	vector<Data*> datas;
 	Data dataInicio = Data(d1);

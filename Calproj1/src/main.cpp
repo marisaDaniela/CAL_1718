@@ -4,26 +4,14 @@
 #include <fstream>
 #include <sstream>
 
-#include "Destino.h"
 #include "Graph.h"
 #include "PreProcess.h"
 #include "Agencia.h"
+#include "auxFunctions.h"
 
 using namespace std;
 
 #define INF std::numeric_limits<double>::max()
-
-Destino getDestinoByName(const vector<Destino> vec, string name){
-	Destino dest;
-	dest.getName() = "";
-	for(auto d:vec){
-		if(d.getName()==name){
-			dest = d;
-			break;
-		}
-	}
-	return dest;
-}
 
 template <class T>
 void getSinglePath(Graph<T> &g, vector<T> path) {

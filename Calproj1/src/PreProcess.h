@@ -48,20 +48,8 @@ void PreProcess<T>::getDestinations(vector<Destino> destinos){
 				string tmp;
 				int days;
 				cin >> tmp >> days;
-				/**
-				 * E A MESMA FUNCAO DO MAIN MAS NAO SEI COMO USAR EM DOIS FICHEIROS DISTINTOS
-				 */
-				Destino d;
-				d.getName() = "";
-				for(auto v:destinos){
-					if(v.getName()==tmp){
-						d = v;
-						break;
-					}
-				}
-				/**
-				 * Terminou a tal funcao
-				 * */
+
+				Destino d = getDestinoByName(destinos, tmp);
 				if(d.getName()==""){
 					cout << "That city does not belong to the available list..." <<endl;
 				}
@@ -90,12 +78,6 @@ void PreProcess<T>::dijkstraAllPairs(Graph<T> graph){
 			}
 		}
 	}
-	//Imprime ligações
-	/*for(auto v:newGraph.getVertexSet()){
-		cout<<v->getInfo().getName()<<" ligado a: "<<endl;
-		for (auto e:v->getAdj())
-			cout<<e.getDest()->getInfo().getName() << endl;
-	}*/
 }
 
 template <class T>
