@@ -48,6 +48,7 @@ int main(void) {
 	a1.leFicheiroAlojamentos("madrid");
 	a1.leFicheiroAlojamentos("amesterdao");
 	a1.leFicheiroAlojamentos("paris");
+	a1.leFicheiroAlojamentos("praga");
 //
 //	a1.verAlojamentos("lisboa");
 //	a1.verAlojamentos("berlim");

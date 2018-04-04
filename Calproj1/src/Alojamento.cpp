@@ -81,6 +81,7 @@ void Alojamento::criaDatas(string d1, string d2) {
 		}
 		dia++;
 	}
+
 	//showDatas();
 }
 
