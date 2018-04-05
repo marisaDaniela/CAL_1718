@@ -213,6 +213,7 @@ int main(void) {
 		ss >> nome1 >> nome2 >> custo_viaj;
 		double custo_viajem = atof(custo_viaj.c_str());
 
+
 		Destino d1 = getDestinoByName(destinos,nome1);
 		Destino d2 = getDestinoByName(destinos,nome2);
 
