@@ -107,3 +107,43 @@ string maxPossibleStartDate(int noites, string maxDataFinal){
 
 	return d.getDataString();
 }
+
+void readInputInt(int &x, string message){
+	int tmp;
+	bool added = false;
+	while(!added){
+		while(!(cin >> tmp)){
+				cout << "Bad value! Must be an integer > 0! "<< message;
+				cin.clear();
+				cin.ignore();
+		}
+		if(tmp>0)
+			added = true;
+		else
+			cout << "Bad value! Must be an integer > 0! "<< message;
+	}
+	x = tmp;
+}
+
+void readInputDate(string &date, string message){
+
+	string tmp;
+	bool valid = false;
+	while(!valid){
+		cin >> tmp;
+		Data d = Data(tmp);
+		if(d.getDia()> numDias(d.getMes(),d.getAno()) || d.getDia()<1 || d.getMes()>12 || d.getMes()<1 || d.getAno()!=2018){
+			cout << "Bad value! Must be a valid date of the year 2018. "<< message;
+		}
+		else
+			valid = true;
+	}
+	date = tmp;
+}
+
+
+bool isValidDate(string date1, string date2){
+	Data d1 = Data(date1);
+	Data d2 = Data(date2);
+	return !(d1>d2);
+}

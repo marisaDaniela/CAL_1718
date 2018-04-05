@@ -15,93 +15,81 @@ using namespace std;
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
 
-void multiplePlaces(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
+void printCities(vector<Destino> destinos){
 	cout << "The cities presented in our travel agency are listed below:\n"<<endl;
-	for(int i=0;i<destinos.size();i++){
-		if(i==destinos.size()-1)
-			cout<< destinos[i].getName() << endl;
-		else
-			cout<<" - " <<destinos[i].getName() << "\n";
+		for(int i=0;i<destinos.size();i++){
+				cout<<" - " <<destinos[i].getName() << "\n";
+		}
+}
+
+void computeRoute(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isDirect){
+	printCities(destinos);
+
+	Destino d3;
+	cout<< "-> Where are you traveling from? Write the name of the city from the provided list."<<endl;
+	bool validCity = false;
+	while(!validCity){
+		string orig;
+		cin >> orig;
+		Destino tmp = getDestinoByName(destinos,orig);
+		if(tmp.getName()==""){
+			cout << "That city does not belong to the available list! City? ";
+		}
+		else{
+			validCity = true;
+			d3 = tmp;
+		}
 	}
 
-	string orig, dest;
-	cout<< "-> Where are you travelling from? Write the name of the city from the provided list."<<endl;
-	cin >> orig;
-	Destino d3 = getDestinoByName(destinos,orig);
-	if(d3.getName()==""){
-		cout << "That city does not belong to the available list..." <<endl;
-		return;
+	int num;
+
+	if(isDirect){
+		num = 1;
+		cout<< "\n-> Where are you traveling to? Write the name of the city from the provided list and the desired duration. "<<endl;
+	}
+	else{
+		cout<< "-> How many cities would you like to visit? ";
+		bool validNumber = false;
+		while(!validNumber){
+			readInputInt(num,"Number of cities? ");
+			if(num<=destinos.size()-1)
+				validNumber = true;
+			else
+				cout << "We only have " << destinos.size()-1 <<" more cities available! Number of cities? ";
+		}
+		cout<< "\nWrite per line the name of the city from the provided list and the desired duration. "<<endl;
 	}
 
-	int num = 0;
-	cout<< "-> How many cities would you like to visit? ";
-	cin >> num;
-	cout<< "\nWrite per line the name of the city from the provided list and the desired duration. "<<endl;
 	PreProcess<Destino> *p = new PreProcess<Destino>(myGraph,num,destinos,d3);
 	if(!p->checkIfPossible(d3))
 		cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
 	else{
-		string date1, date2;
-		cout<< "-> Which would be the minimum starting date? (day/month/year) ";
-		cin >>date1;
-		cout<< "\n-> Which would be the maximum final date? (day/month/year) ";
-		cin >>date2;
-		cout << endl;
 		Graph<Destino> newGraph = p->getGraph();
 		newGraph.setAgencia(a1);
+		string date1, date2;
+		cout<< "-> Which would be the minimum starting date? (day/month/year) ";
+		readInputDate(date1, "Minimum starting date? ");
+		cout<< "\n-> Which would be the maximum final date? (day/month/year) ";
+		bool validDate = false;
+		while(!validDate){
+			readInputDate(date2, "Maximum final date? ");
+			if(isValidDate(dataFinal(date1,newGraph.getNumNights()),date2))
+				validDate = true;
+			else
+				cout << "The final date must be bigger or equal to "<<dataFinal(date1,newGraph.getNumNights()) << ", due to number of nights you have selected. Maximum final date? ";
+		}
 		newGraph.dfs(d3,date1,date2);
 	}
-
 	cout<<"\nProgram ended!"<<endl;
-	return;
-};
-void directTravel(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
-	cout << "The cities presented in our travel agency are listed below:\n"<<endl;
-		for(int i=0;i<destinos.size();i++){
-			if(i==destinos.size()-1)
-				cout<< destinos[i].getName() << endl;
-			else
-				cout<<" - " <<destinos[i].getName() << "\n";
-		}
+}
 
-		string orig, dest;
-		cout<< "-> Where are you travelling from? Write the name of the city from the provided list."<<endl;
-		cin >> orig;
-		Destino d3 = getDestinoByName(destinos,orig);
-		if(d3.getName()==""){
-			cout << "That city does not belong to the available list..." <<endl;
-			return;
-		}
-
-		int num = 1;
-
-		cout<< "\n-> Where are you travelling for? Write the name of the city from the provided list and the desired duration. "<<endl;
-		PreProcess<Destino> *p = new PreProcess<Destino>(myGraph,num,destinos,d3);
-		if(!p->checkIfPossible(d3))
-			cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
-		else{
-			string date1, date2;
-			cout<< "-> Which would be the minimum starting date? (day/month/year) ";
-			cin >>date1;
-			cout<< "\n-> Which would be the maximum final date? (day/month/year) ";
-			cin >>date2;
-			cout << endl;
-			Graph<Destino> newGraph = p->getGraph();
-			newGraph.setAgencia(a1);
-			newGraph.dfs(d3,date1,date2);
-		}
-
-		cout<<"\nProgram ended!"<<endl;
-		return;
-};
-
-void pause()
-{
-	cin.get();
+void pause(){
+	cin.ignore();
+	cin.clear();
 }
 
 void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
-	unsigned int op;
+	int op;
 
 	cout << "*" << string(50, '*') << "*" << endl;
 	cout << "*" << string(19, ' ') <<   "TRAVEL AGENCY" <<  string(18, ' ') << "*" << endl;
@@ -109,47 +97,40 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	cout << "* " << " 1. Direct travel    " << string(28, ' ') << "*" << endl;
 	cout << "* " << " 2. Visit Multiple places" << string(24, ' ') << "*" << endl;
 	cout << "* " << " 3. Back             " << string(28, ' ') << "*" << endl;
-	cout << "* " << " 0. Exit             " << string(28, ' ') << "*" << endl;
+	cout << "* " << " 4. Exit             " << string(28, ' ') << "*" << endl;
 
 	cout << "*" << string(50, '*') << "*" << endl;
-	cout << "Choose[0-3] : \n";
+	cout << "Choose[1-4] : \n";
 
-	cin >> op;
-
-	if (op > 5) //
-	{
-		cout << "Invalid Option! ENTER to try again.\n";
-		pause();
-		start(destinos,myGraph,a1);
+	bool validInput  = false;
+	while(!validInput){
+		readInputInt(op, "Choose[1-4]: ");
+		if (op <1 || op>4 ){
+			cout << "Invalid Option! Choose[1-4]:";
+			pause();
+		}
+		else
+			validInput = true;
 	}
-	switch (op)
-	{
-	case 1:
-	{
-		directTravel(destinos,myGraph,a1);
-	}break;
-	case 2:
-	{
-		multiplePlaces(destinos,myGraph,a1);;
-	}break;
-
-	case 3:
-	{
-		inicio(destinos,myGraph,a1);
-	}break;
-
-	case 0:
-	{
-		exit(1);
-	}break;
+	switch (op){
+		case 1:
+			computeRoute(destinos,myGraph,a1,true);
+			break;
+		case 2:
+			computeRoute(destinos,myGraph,a1,false);
+			break;
+		case 3:
+			inicio(destinos,myGraph,a1);
+			break;
+		case 4:
+			exit(1);
+			break;
 	}
 
 }
 
-void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1)
-{
-
-	unsigned int op;
+void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
+	int op;
 	cout << "*" << string(50, '*') << "*" << endl;
 	cout << "*" << string(19, ' ') <<   "TRAVEL AGENCY" <<  string(18, ' ') << "*" << endl;
 	cout << "*" << string(50, ' ') << "*" << endl;
@@ -157,44 +138,29 @@ void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1)
 	cout << "*" << string(21, ' ') << "2017/2018" << string(20, ' ') << "*" << endl;
 	cout << "*" << string(50, ' ') << "*" << endl;
 	cout << "*" << string(18, ' ') << "Filipe Lemos   " << string(17, ' ') << "*" << endl;
-	cout << "*" << string(18, ' ') << "Diogo Ribeiro? " << string(17, ' ') << "*" << endl;
 	cout << "*" << string(18, ' ') << "Marisa Oliveira" << string(17, ' ') << "*" << endl;
 	cout << "*" << string(50, ' ') << "*" << endl;
 	cout << "*" << string(50, '*') << "*" << endl;
-	cout << "Press: 1 to start\n       0 to leave\n";
-	cin >> op;
+	cout << "Press: 1 to start\n       2 to leave\n";
 
-	if ( op > 1)
-	{
-		cout << "Invalid option! ENTER to try again.\n";
-		pause();
-		inicio(destinos,myGraph,a1);
-
-	}
-
-	switch (op)
-	{
-	case 1:
-	{
-
-		start(destinos,myGraph,a1);
-	}break;
-	case 0:
-	{
-		exit(1);
-	}break;
-	}
-}
-
-
-
-template <class T>
-void getSinglePath(Graph<T> &g, vector<T> path) {
-	for(unsigned int i = 0; i < path.size(); i++){
-		if(i==path.size()-1)
-			cout << path[i].getName() << endl;
+	bool validInput  = false;
+	while(!validInput){
+		readInputInt(op, "Choose[1-2]: ");
+		if (op != 1 && op !=2 ){
+			cout << "Invalid Option! Choose[1-2]:";
+			pause();
+		}
 		else
-			cout << path[i].getName() << " -> ";
+			validInput = true;
+	}
+
+	switch (op){
+		case 1:
+			start(destinos,myGraph,a1);
+			break;
+		case 2:
+			exit(1);
+			break;
 	}
 }
 
@@ -236,6 +202,7 @@ int main(void) {
 		cout << "Error opening 'ligacoesDestinos' file!"<<endl;
 		return -1;
 	}
+
 	while(!ficheiro.eof()){
 		string line = "", nome1="", nome2 ="", custo_viaj = "";
 		getline(ficheiro,line);
@@ -252,6 +219,7 @@ int main(void) {
 		myGraph.addEdge(d1,d2,custo_viajem);
 	}
 	ficheiro.close();
+
 	inicio(destinos,myGraph,a1);
 	return 0;
 }

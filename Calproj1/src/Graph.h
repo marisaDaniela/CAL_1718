@@ -137,6 +137,8 @@ public:
 	vector<Vertex<T> *> getVertexSet() const;
 	double getTripCost(const T &in) const;
 
+	int getNumNights();
+
 	void setAgencia(Agencia a);
 
 	void dijkstraShortestPath(const T &s);
@@ -172,6 +174,15 @@ double Graph<T>::getTripCost(const T &in) const{
 	Vertex<T> *dest= findVertex(in);
 	cost = dest->custo;
 	return cost;
+}
+
+
+template <class T>
+int Graph<T>::getNumNights(){
+	int noites=0;
+	for(auto v : vertexSet)
+		noites += v->duration;
+	return noites;
 }
 
 /*

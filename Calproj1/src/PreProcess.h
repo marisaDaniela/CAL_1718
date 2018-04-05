@@ -41,14 +41,20 @@ void PreProcess<T>::getDestinations(vector<Destino> destinos){
 			bool added = false;
 			while(!added){
 				string tmp;
-				int days;
-				cin >> tmp >> days;
+				cout<< "City: ";
+				cin >> tmp ;
 
 				Destino d = getDestinoByName(destinos, tmp);
+				Destino checkIfAlreadyInserted = getDestinoByName(locais, tmp);
 				if(d.getName()==""){
-					cout << "That city does not belong to the available list..." <<endl;
+					cout << "That city does not belong to the available list! ";
 				}
+				else if(checkIfAlreadyInserted.getName()!="")
+					cout << "That city was already selected. Pick another one! ";
 				else {
+					int days;
+					cout<< "Duration: ";
+					readInputInt(days,"Duration? ");
 					added = true;
 					locais.push_back(d);
 					dates.push_back(days);
