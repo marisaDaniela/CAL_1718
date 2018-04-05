@@ -5,4 +5,8 @@ Objectivos:
 y dias (passado por argumento) para uma determinada cidade (passado por argumento) (DONE)
 3)Pre-processamento dos locais a visitar (calculo do caminho minimo entre cada
 par de locais (DONE)
-4)Algoritmo pesquisa em profundidade (dfs) para obter a order entre os locais
+4)Algoritmo pesquisa em profundidade (dfs) para obter a order entre os locais (DONE)
+
+verificacao de inputs:
+-tirar codigo repetido do main;
+-verificar se 2a data é maior que a primeira
