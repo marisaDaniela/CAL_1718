@@ -4,3 +4,4 @@ Lisboa Amesterdao 135
 Amesterdao Paris 50
 Amesterdao Lisboa 70
 Paris Lisboa 68
+Madrid Praga 20

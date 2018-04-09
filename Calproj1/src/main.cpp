@@ -11,8 +11,6 @@
 
 using namespace std;
 
-#define INF std::numeric_limits<double>::max()
-
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
 
 void printCities(vector<Destino> destinos){

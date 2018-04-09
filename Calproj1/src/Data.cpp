@@ -34,10 +34,7 @@ int Data::getValue(string &dataStr){
 
 void Data::buildString(int dia, int mes, int ano){
 	string s = to_string(dia);
-	s += "/";
-	s += to_string(mes);
-	s += "/";
-	s += to_string(ano);
+	s = s + "/" + to_string(mes) + "/" + to_string(ano);
 	setDataString(s);
 }
 

@@ -20,6 +20,7 @@ class PreProcess{
 public:
 	PreProcess (Graph<T> old, int n, vector<Destino> allDestinos, Destino orig);
 	bool checkIfPossible(Destino origin);
+	void orderAdj();
 	Graph<T> getGraph() const;
 	vector<Destino> getLocais() const;
 };
@@ -79,6 +80,7 @@ void PreProcess<T>::dijkstraAllPairs(Graph<T> graph){
 			}
 		}
 	}
+	orderAdj();
 }
 
 template <class T>
@@ -116,6 +118,14 @@ Graph<T> PreProcess<T>::getGraph() const{
 template <class T>
 vector<Destino> PreProcess<T>::getLocais() const{
 	return locais;
+}
+
+template <class T>
+void PreProcess<T>::orderAdj(){
+	for(Vertex<T> * v : newGraph.getVertexSet()){
+		vector<Edge<T> > adj = v->getAdj();
+		sort(adj.begin(), adj.end());
+	}
 }
 
 #endif

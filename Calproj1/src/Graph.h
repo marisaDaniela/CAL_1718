@@ -96,6 +96,7 @@ public:
 	Edge(Vertex<T> *d, double w);
 	Vertex<T> * getDest() const;
 	double getCusto() const;
+	bool operator < (Edge<T> &rhs) const;
 	friend class Graph<T>;
 	friend class Vertex<T>;
 };
@@ -111,6 +112,11 @@ Vertex<T> * Edge<T>::getDest() const{
 template <class T>
 double Edge<T>::getCusto() const{
 	return custo_viagem;
+}
+
+template <class T>
+bool Edge<T>::operator < (Edge<T> &rhs) const{
+	return (custo_viagem < rhs.getCusto());
 }
 
 /*************************** Graph  **************************/
