@@ -1,0 +1,8 @@
+Lisboa 60.8
+Madrid 78.2
+Paris 90.7
+Amesterdao 60.9
+Berlim 150.3
+Praga 100.3
+Bruxelas 77.6
+
