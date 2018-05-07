@@ -1,12 +1,7 @@
 Objectivos:
-1)Criar ficheiros CSV para preços de alojamento por datas; (DONE)
-2)Criar class para ler e gravar os dados desses ficheiros; (DONE)
-2.1)Função que retorna o custo a partir do dia x (passado por argumento) durante
-y dias (passado por argumento) para uma determinada cidade (passado por argumento) (DONE)
-3)Pre-processamento dos locais a visitar (calculo do caminho minimo entre cada
-par de locais (DONE)
-4)Algoritmo pesquisa em profundidade (dfs) para obter a order entre os locais (DONE)
-
-verificacao de inputs:
--tirar codigo repetido do main;
--verificar se 2a data é maior que a primeira
+1) Cliente oferece lista de nomes de cidades ou pontos de interesse a serem incluidos na viagem
+2) Comparar lista do cliente:
+2.1) 1a passagem - cidades
+2.2) 2a passagem - pontos de interesse de cada cidade
+3) Utilizar pesquisa exacta para a comparação (retorna true se existir, false em caso contrário)
+4) Utilizar pesquisa aproximada para a comparação (retorna lista com os resultados mais proximos)
