@@ -15,3 +15,10 @@ bool Destino::operator == (const Destino &d2) const {
 	return (name==d2.name && custo_aloj==d2.custo_aloj);
 }
 
+vector<string> Destino::getPontosInteresse() const {
+	return pontos_interesse;
+}
+
+void Destino::setPontosInteresse(vector<string> pontosInteresse) {
+	pontos_interesse = pontosInteresse;
+}

@@ -124,7 +124,7 @@ template <class T>
 void PreProcess<T>::orderAdj(){
 	for(Vertex<T> * v : newGraph.getVertexSet()){
 		vector<Edge<T> > adj = v->getAdj();
-		sort(adj.begin(), adj.end());
+		//sort(adj.begin(), adj.end());
 	}
 }
 

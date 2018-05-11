@@ -42,7 +42,7 @@ public:
 	Vertex *getPath() const;
 	vector<Edge<T> > getAdj() const;
 	friend class Graph<T>;
-	friend class MutablePriorityQueue<Vertex<T>>;
+	friend class MutablePriorityQueue< Vertex < T > >;
 };
 
 

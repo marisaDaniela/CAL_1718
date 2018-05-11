@@ -12,6 +12,7 @@
 using namespace std;
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
+void clientInterface();
 
 void printCities(vector<Destino> destinos){
 	cout << "The cities presented in our travel agency are listed below:\n"<<endl;
@@ -92,10 +93,10 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	cout << "*" << string(50, '*') << "*" << endl;
 	cout << "*" << string(19, ' ') <<   "TRAVEL AGENCY" <<  string(18, ' ') << "*" << endl;
 	cout << "*" << string(50, '*') << "*" << endl;
-	cout << "* " << " 1. Direct travel    " << string(28, ' ') << "*" << endl;
-	cout << "* " << " 2. Visit Multiple places" << string(24, ' ') << "*" << endl;
-	cout << "* " << " 3. Back             " << string(28, ' ') << "*" << endl;
-	cout << "* " << " 4. Exit             " << string(28, ' ') << "*" << endl;
+	cout << "* " << " 1. Exact search       " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 2. Approximate search " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 3. Back               " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 4. Exit               " << string(26, ' ') << "*" << endl;
 
 	cout << "*" << string(50, '*') << "*" << endl;
 	cout << "Choose[1-4] : \n";
@@ -112,10 +113,14 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	}
 	switch (op){
 		case 1:
-			computeRoute(destinos,myGraph,a1,true);
+			//computeRoute(destinos,myGraph,a1,true);
+			//TODO: pesquisa exacta
+			clientInterface();
 			break;
 		case 2:
-			computeRoute(destinos,myGraph,a1,false);
+			//computeRoute(destinos,myGraph,a1,false);
+			//TODO: pesquisa aproximada
+			cout << "TODO";
 			break;
 		case 3:
 			inicio(destinos,myGraph,a1);
@@ -125,6 +130,22 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 			break;
 	}
 
+}
+
+void clientInterface() {
+	vector<string> places;
+	string namePlace;
+	int number = 0;
+	cout << "How many places would you like to visit?" << endl;
+	cin >> number;
+	cout << "Which places would you like to visit?" << endl;
+	while(number != 0) {
+		cout << "-> ";
+		cin >> namePlace;
+		number--;
+		places.push_back(namePlace);
+	}
+	// TODO: pesquisar no ficheiro pelas palavras deste vetor(lista dos sitios que o utilizador deseja visitar) e depois adicionar a cidade onde for encontrada(se existir) ao percurso do cliente
 }
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
