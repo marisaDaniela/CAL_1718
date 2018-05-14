@@ -31,6 +31,7 @@ public:
 	void leFicheiros();
 	void verAlojamentos(string nomeCidade);
 	double getCustoTempo(string data, int dias, string cidade);
+	bool pesquisaExata(string name);
 };
 
 #endif

@@ -213,3 +213,16 @@ int Agencia::editDistance(string pattern, string text)
 	return d[n];
 }
 
+bool Agencia::pesquisaExata(string name) {
+
+	for (map<string,set<string> >::iterator it= pontosInteresse.begin(); it!= pontosInteresse.end(); ++it) {
+		//cout << it->first << " => " ;// << it->second << '\n';
+		for(auto point: it->second) {
+			if(point == name)
+				return true;
+			else
+				return false;
+		}
+	}
+	return true;
+}

@@ -12,13 +12,13 @@
 using namespace std;
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
-void clientInterface();
+void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
 
 void printCities(vector<Destino> destinos){
 	cout << "The cities presented in our travel agency are listed below:\n"<<endl;
-		for(int i=0;i<destinos.size();i++){
-				cout<<" - " <<destinos[i].getName() << "\n";
-		}
+	for(int i=0;i<destinos.size();i++){
+		cout<<" - " <<destinos[i].getName() << "\n";
+	}
 }
 
 void computeRoute(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isDirect){
@@ -112,40 +112,56 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 			validInput = true;
 	}
 	switch (op){
-		case 1:
-			//computeRoute(destinos,myGraph,a1,true);
-			//TODO: pesquisa exacta
-			clientInterface();
-			break;
-		case 2:
-			//computeRoute(destinos,myGraph,a1,false);
-			//TODO: pesquisa aproximada
-			cout << "TODO";
-			break;
-		case 3:
-			inicio(destinos,myGraph,a1);
-			break;
-		case 4:
-			exit(1);
-			break;
+	case 1:
+		//computeRoute(destinos,myGraph,a1,true);
+		//TODO: pesquisa exacta
+		clientInterface(destinos,myGraph,a1);
+		break;
+	case 2:
+		//computeRoute(destinos,myGraph,a1,false);
+		//TODO: pesquisa aproximada
+		cout << "TODO";
+		break;
+	case 3:
+		inicio(destinos,myGraph,a1);
+		break;
+	case 4:
+		exit(1);
+		break;
 	}
 
 }
 
-void clientInterface() {
-	vector<string> places;
-	string namePlace;
-	int number = 0;
-	cout << "How many places would you like to visit?" << endl;
-	cin >> number;
-	cout << "Which places would you like to visit?" << endl;
-	while(number != 0) {
-		cout << "-> ";
-		cin >> namePlace;
-		number--;
-		places.push_back(namePlace);
+
+void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
+
+	printCities(destinos);
+
+	Destino d3;
+	cout<< "-> Where are you traveling from? Write the name of the city from the provided list."<<endl;
+	bool validCity = false;
+	while(!validCity){
+		string orig;
+		cin >> orig;
+		Destino tmp = getDestinoByName(destinos,orig);
+		if(tmp.getName()==""){
+			cout << "That city does not belong to the available list! City? ";
+		}
+		else{
+
+			validCity = true;
+			d3 = tmp;
+		}
 	}
-	// TODO: pesquisar no ficheiro pelas palavras deste vetor(lista dos sitios que o utilizador deseja visitar) e depois adicionar a cidade onde for encontrada(se existir) ao percurso do cliente
+
+	string name;
+
+	while(name != "0") {
+		cout<< "-> Which place(s) would you like to visit? (Press '0' to end!)" << endl;
+		cin >> name;
+		//a1.pesquisaExata(name);
+	}
+
 }
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
@@ -174,12 +190,12 @@ void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1){
 	}
 
 	switch (op){
-		case 1:
-			start(destinos,myGraph,a1);
-			break;
-		case 2:
-			exit(1);
-			break;
+	case 1:
+		start(destinos,myGraph,a1);
+		break;
+	case 2:
+		exit(1);
+		break;
 	}
 }
 
