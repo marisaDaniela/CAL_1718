@@ -7,7 +7,6 @@
 #include "Graph.h"
 #include "PreProcess.h"
 #include "Agencia.h"
-#include "auxFunctions.h"
 
 using namespace std;
 
@@ -117,12 +116,10 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	switch (op){
 	case 1:
 		//computeRoute(destinos,myGraph,a1,true);
-		//TODO: pesquisa exacta
 		clientInterface(destinos,myGraph,a1,false);
 		break;
 	case 2:
 		//computeRoute(destinos,myGraph,a1,false);
-		//TODO: pesquisa aproximada
 		clientInterface(destinos,myGraph,a1,true);
 		break;
 	case 3:
@@ -135,23 +132,39 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 
 }
 
+int getIndexArray(vector<string> vec, string place){
+	int index = -1;
+	stringToUpper(place);
+	for(size_t i=0; i<vec.size();i++){
+		string aux = vec.at(i);
+		stringToUpper(aux);
+		if(aux==place){
+			index = i;
+			break;
+		}
+	}
+	return index;
+}
+
 
 void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isApprox) {
 
 	printCities(destinos);
+	map<string,int> dates;
+	string orig;
 
 	Destino d3;
 	cout<< "-> Where are you traveling from? Write the name of the city from the provided list."<<endl;
 	bool validCity = false;
 	while(!validCity){
-		string orig;
+		orig = "";
 		getline(cin,orig);
 		Destino tmp = getDestinoByName(destinos,orig);
 		if(tmp.getName()==""){
 			cout << "That city does not belong to the available list! City? ";
 		}
 		else{
-
+			dates[orig] = 0;
 			validCity = true;
 			d3 = tmp;
 		}
@@ -161,9 +174,11 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 	cout << endl;
 	cout<< "->Which place(s) or monument(s) would you like to visit? (Press ENTER to stop!)" << endl;
 
+	set<string> points;
+
 	while(!valid) {
 		string name = "";
-		cout<< "->Place/Monument? ";
+		cout<< "Place/Monument? ";
 		getline(cin,name);
 		if(name.length()==0)
 			break;
@@ -182,10 +197,27 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 			if(point.length()==0)
 				continue;
 			else{
+				int index = getIndexArray(matches,point);
+				if(index==-1)
+					cout << "That word wasn't on the list." <<endl;
+				else{
 
+					if(paises.at(index)==orig){
+						cout << "That point of interest belongs to the selected origin. Please pick places that do not belong to your origin city." <<endl;
+					}
+					else{
+						auto ret = points.insert(paises.at(index));
+						if(ret.second == false)
+							dates.at(paises.at(index))++;
+						else
+							dates[paises.at(index)]=1;
+						cout << "Point of interest added!" <<endl;
+					}
+				}
 			}
 		}
 	}
+	//TODO meter tudo no preprocess graph e letz go
 
 }
 

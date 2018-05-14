@@ -28,4 +28,6 @@ void readInputDate(string &date, string message);
 
 bool isValidDate(string date1, string date2);
 
+void stringToUpper(string &word);
+
 #endif

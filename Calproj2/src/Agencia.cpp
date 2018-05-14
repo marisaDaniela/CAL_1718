@@ -287,11 +287,3 @@ bool Agencia::pesquisaExata(string name, vector<string> &matches, vector<string>
 	return exists;
 }
 
-/**
- * Converts any lower case letter of a string in upper case letters.
- * @Param word - the string to be converted
- */
-void Agencia::stringToUpper(string &word){
-	for(size_t i=0; i < word.length(); i++)
-		word.at(i) = toupper(word.at(i));
-}

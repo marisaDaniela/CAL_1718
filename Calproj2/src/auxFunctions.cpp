@@ -147,3 +147,12 @@ bool isValidDate(string date1, string date2){
 	Data d2 = Data(date2);
 	return !(d1>d2);
 }
+
+/**
+ * Converts any lower case letter of a string in upper case letters.
+ * @Param word - the string to be converted
+ */
+void stringToUpper(string &word){
+	for(size_t i=0; i < word.length(); i++)
+		word.at(i) = toupper(word.at(i));
+}

@@ -6,6 +6,7 @@
 #include <map>
 #include <set>
 #include "Alojamento.h"
+#include "auxFunctions.h"
 
 using namespace std;
 
@@ -27,7 +28,6 @@ class Agencia {
 	int editDistance(string pattern, string text);
 	void pre_kmp(string pattern, vector<int> & prefix);
 	int kmp(string text, string pattern);
-	void stringToUpper(string &word);
 public:
 	void pesquisaAproximada(string word, vector<string> &matches, vector<string> &paises);
 	void leFicheiros();
