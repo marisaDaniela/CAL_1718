@@ -13,6 +13,7 @@ void Agencia::leFicheiros(){
 	leFicheiroAlojamentos("amesterdao");
 	leFicheiroAlojamentos("paris");
 	leFicheiroAlojamentos("praga");
+	lerPontosDeInteresse();
 }
 
 void Agencia::leFicheiroAlojamentos(string nomeCidade) {
@@ -56,6 +57,47 @@ void Agencia::leFicheiroAlojamentos(string nomeCidade) {
 			praga.push_back(a);
 	}
 
+}
+
+void Agencia::lerPontosDeInteresse(){
+	ifstream is;
+	is.open("pontosDeInteresse.txt");
+	if(!is) {
+		cout << "Error opening file <pontosDeInteresse.txt>!"<<endl;
+		exit(1);
+	}
+
+	while(!is.eof()){
+		string buf="",word ="";
+		getline(is,buf);
+		if(buf.length()==0)
+			continue;
+
+		word = chopString(buf,"-");
+		set<string> points;
+		while(buf.find(",")!=string::npos){
+			string place = chopString(buf,",");
+			points.insert(place);
+		}
+		pontosInteresse[word] = points;
+
+	}
+
+	is.close();
+}
+
+/**
+ * Cuts the string on the delimiter.
+ * @Param buf - The dictionary line
+ * @Param delimiter - The delimiter where it should be cut
+ * @Return value: the word between the beggining of the string and the specified delimiter.
+ */
+string Agencia::chopString(string &buf, string delimiter){
+	string word = "";
+	size_t pos = buf.find(delimiter);
+	word = buf.substr(0, pos);
+	buf.erase(0, pos+2);
+	return word;
 }
 
 vector<Alojamento *> Agencia::getCityVector(string nomeCidade) const{

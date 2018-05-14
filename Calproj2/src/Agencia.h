@@ -3,6 +3,8 @@
 
 
 #include <fstream>
+#include <map>
+#include <set>
 #include "Alojamento.h"
 
 using namespace std;
@@ -16,8 +18,11 @@ class Agencia {
 	vector<Alojamento *> madrid;
 	vector<Alojamento *> paris;
 	vector<Alojamento *> praga;
+	map<string,set<string> > pontosInteresse;
 
 	void leFicheiroAlojamentos(string nomeCidade);
+	void lerPontosDeInteresse();
+	string chopString(string &buf, string delimiter);
 	vector<Alojamento *> getCityVector(string nomeCidade) const;
 public:
 	void leFicheiros();
