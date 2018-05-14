@@ -111,16 +111,19 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 		else
 			validInput = true;
 	}
+
+	cin.ignore();
+
 	switch (op){
 	case 1:
 		//computeRoute(destinos,myGraph,a1,true);
 		//TODO: pesquisa exacta
-		clientInterface(destinos,myGraph,a1);
+		clientInterface(destinos,myGraph,a1,false);
 		break;
 	case 2:
 		//computeRoute(destinos,myGraph,a1,false);
 		//TODO: pesquisa aproximada
-		cout << "TODO";
+		clientInterface(destinos,myGraph,a1,true);
 		break;
 	case 3:
 		inicio(destinos,myGraph,a1);
@@ -133,7 +136,7 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 }
 
 
-void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
+void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isApprox) {
 
 	printCities(destinos);
 
@@ -142,7 +145,7 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 	bool validCity = false;
 	while(!validCity){
 		string orig;
-		cin >> orig;
+		getline(cin,orig);
 		Destino tmp = getDestinoByName(destinos,orig);
 		if(tmp.getName()==""){
 			cout << "That city does not belong to the available list! City? ";
@@ -154,12 +157,37 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 		}
 	}
 
-	string name;
+	bool valid = false;
+	cout<< "-> Which place(s) or monument(s) would you like to visit? (Press '0' to end!)" << endl;
 
-	while(name != "0") {
-		cout<< "-> Which place(s) would you like to visit? (Press '0' to end!)" << endl;
-		cin >> name;
-		//a1.pesquisaExata(name);
+	while(!valid) {
+		string name = "";
+		cout<< "Place/Monument? ";
+		getline(cin,name);
+		if(name.length()==0)
+			continue;
+		else if(name=="0")
+			valid = true;
+		else{
+			vector<string> matches;
+			if(isApprox)
+				matches = a1.pesquisaAproximada(name);
+			else
+				//TODO
+
+			if(matches.size()==0)
+				cout << "We have no interest point close to that word! ";
+			else{
+				string point = "";
+				cout << "Which point of the provided list were you looking for? (Press ENTER to ignore!)";
+				getline(cin,point);
+				if(point.length()==0)
+					continue;
+				else{
+
+				}
+			}
+		}
 	}
 
 }
