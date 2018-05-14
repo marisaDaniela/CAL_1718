@@ -24,7 +24,10 @@ class Agencia {
 	void lerPontosDeInteresse();
 	string chopString(string &buf, string delimiter);
 	vector<Alojamento *> getCityVector(string nomeCidade) const;
+	int editDistance(string pattern, string text);
+	float numApproximateStringMatching(string toSearch);
 public:
+	vector<string> pesquisaAproximada(string word);
 	void leFicheiros();
 	void verAlojamentos(string nomeCidade);
 	double getCustoTempo(string data, int dias, string cidade);

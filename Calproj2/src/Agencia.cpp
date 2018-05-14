@@ -14,6 +14,7 @@ void Agencia::leFicheiros(){
 	leFicheiroAlojamentos("paris");
 	leFicheiroAlojamentos("praga");
 	lerPontosDeInteresse();
+	pesquisaAproximada("torre");
 }
 
 void Agencia::leFicheiroAlojamentos(string nomeCidade) {
@@ -159,3 +160,56 @@ double Agencia::getCustoTempo(string data, int dias, string cidade) {
 
 	return custo;
 }
+
+vector<string> Agencia::pesquisaAproximada(string word){
+	vector<string> matches;
+	vector<string> paises;
+	const float threshold = 0.3;
+
+	for (map<string,set<string>>::iterator it=pontosInteresse.begin(); it!=pontosInteresse.end(); ++it){
+	    cout << "Getting points in " << it->first << "..."<< endl;
+	    for(auto point: it->second){
+	    	int num = editDistance(word,point);
+	    	size_t max = word.length();
+	    	if(point.length()>max)
+	    		max = point.length();
+	    	float result = (float) num/max;
+	    	result = 1 - result;
+	    	if(result>=threshold){
+	    		matches.push_back(point);
+	    		paises.push_back(it->first);
+	    	}
+	    }
+	}
+
+	for(int i=0; i<matches.size(); i++){
+		cout << paises[i] << "-" << matches[i]<<endl;
+	}
+	return matches;
+}
+
+int Agencia::editDistance(string pattern, string text)
+{
+	int n=text.length();
+	vector<int> d(n+1);
+	int old,neww;
+	for (int j=0; j<=n; j++)
+		d[j]=j;
+	int m=pattern.length();
+	for (int i=1; i<=m; i++) {
+		old = d[0];
+		d[0]=i;
+		for (int j=1; j<=n; j++) {
+			if (pattern[i-1]==text[j-1]) neww = old;
+			else {
+				neww = min(old,d[j]);
+				neww = min(neww,d[j-1]);
+				neww = neww +1;
+			}
+			old = d[j];
+			d[j] = neww;
+		}
+	}
+	return d[n];
+}
+
