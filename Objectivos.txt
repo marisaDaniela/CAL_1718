@@ -5,3 +5,7 @@ Objectivos:
 2.2) 2a passagem - pontos de interesse de cada cidade
 3) Utilizar pesquisa exacta para a comparação (retorna true se existir, false em caso contrário)
 4) Utilizar pesquisa aproximada para a comparação (retorna lista com os resultados mais proximos)
+
+DONE:
+
+Mapa na Agencia que relaciona pais com ponto de interesse
