@@ -1,0 +1,10 @@
+Objectivos:
+1) Iterativo: Cliente diz de onde parte, e depois diz ponto de interesse a ponto de interesse
+2) Comparar lista do cliente:
+2.1) 2a passagem - pontos de interesse de cada cidade
+3) Utilizar pesquisa exacta para a comparação (retorna true se existir, false em caso contrário)
+4) Utilizar pesquisa aproximada para a comparação (retorna lista com os resultados mais proximos)
+
+DONE:
+
+Mapa na Agencia que relaciona pais com ponto de interesse
