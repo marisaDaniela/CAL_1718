@@ -12,7 +12,7 @@
 using namespace std;
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
-void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
+void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isApprox);
 
 void printCities(vector<Destino> destinos){
 	cout << "The cities presented in our travel agency are listed below:\n"<<endl;
@@ -158,34 +158,31 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 	}
 
 	bool valid = false;
-	cout<< "-> Which place(s) or monument(s) would you like to visit? (Press '0' to end!)" << endl;
+	cout << endl;
+	cout<< "->Which place(s) or monument(s) would you like to visit? (Press ENTER to stop!)" << endl;
 
 	while(!valid) {
 		string name = "";
-		cout<< "Place/Monument? ";
+		cout<< "->Place/Monument? ";
 		getline(cin,name);
 		if(name.length()==0)
-			continue;
-		else if(name=="0")
-			valid = true;
+			break;
 		else{
-			vector<string> matches;
+			vector<string> matches, paises;
 			if(isApprox)
-				matches = a1.pesquisaAproximada(name);
-			else
-				//TODO
-
-			if(matches.size()==0)
-				cout << "We have no interest point close to that word! ";
+				a1.pesquisaAproximada(name,matches,paises);
 			else{
-				string point = "";
-				cout << "Which point of the provided list were you looking for? (Press ENTER to ignore!)";
-				getline(cin,point);
-				if(point.length()==0)
+				if(!a1.pesquisaExata(name,matches,paises))
 					continue;
-				else{
+			}
 
-				}
+			string point = "";
+			cout << "->Which point of the provided list were you looking for? (Press ENTER to ignore!)";
+			getline(cin,point);
+			if(point.length()==0)
+				continue;
+			else{
+
 			}
 		}
 	}

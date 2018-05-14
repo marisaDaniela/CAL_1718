@@ -25,15 +25,16 @@ class Agencia {
 	string chopString(string &buf, string delimiter);
 	vector<Alojamento *> getCityVector(string nomeCidade) const;
 	int editDistance(string pattern, string text);
-	float numApproximateStringMatching(string toSearch);
+	void pre_kmp(string pattern, vector<int> & prefix);
+	int kmp(string text, string pattern);
+	void stringToUpper(string &word);
 public:
-	vector<string> pesquisaAproximada(string word);
+	void pesquisaAproximada(string word, vector<string> &matches, vector<string> &paises);
 	void leFicheiros();
 	void verAlojamentos(string nomeCidade);
 	double getCustoTempo(string data, int dias, string cidade);
-	bool pesquisaExata(string name);
-	void pre_kmp(string pattern, vector<int> & prefix);
-	int kmp(string text, string pattern);
+	bool pesquisaExata(string name, vector<string> &matches, vector<string> &paises);
+
 };
 
 #endif

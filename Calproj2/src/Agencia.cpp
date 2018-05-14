@@ -14,7 +14,6 @@ void Agencia::leFicheiros(){
 	leFicheiroAlojamentos("paris");
 	leFicheiroAlojamentos("praga");
 	lerPontosDeInteresse();
-	pesquisaAproximada("torre");
 }
 
 void Agencia::leFicheiroAlojamentos(string nomeCidade) {
@@ -161,31 +160,41 @@ double Agencia::getCustoTempo(string data, int dias, string cidade) {
 	return custo;
 }
 
-vector<string> Agencia::pesquisaAproximada(string word){
-	vector<string> matches;
-	vector<string> paises;
-	const float threshold = 0.3;
+void Agencia::pesquisaAproximada(string word, vector<string> &matches, vector<string> &paises){
+	int num;
+	size_t max;
+	float result;
+	float threshold = 0.5;
+	bool foundOne = false;
 
-	for (map<string,set<string> >::iterator it=pontosInteresse.begin(); it!=pontosInteresse.end(); ++it){
-		cout << "Getting points in " << it->first << "..."<< endl;
-		for(auto point: it->second){
-			int num = editDistance(word,point);
-			size_t max = word.length();
-			if(point.length()>max)
-				max = point.length();
-			float result = (float) num/max;
-			result = 1 - result;
-			if(result>=threshold){
-				matches.push_back(point);
-				paises.push_back(it->first);
+	stringToUpper(word);
+	cout << "Words that approximately match that input:" <<endl;
+
+	while(!foundOne){
+		for (map<string,set<string> >::iterator it=pontosInteresse.begin(); it!=pontosInteresse.end(); ++it){
+			string pais = it->first;
+			stringToUpper(pais);
+			for(auto point: it->second){
+				string place = point;
+				stringToUpper(place);
+
+				num = editDistance(word,place);
+				max = word.length();
+				if(point.length()>max)
+					max = point.length();
+
+				result = 1- ((float) num/max);
+				if(result>=threshold){
+					cout << "  " << pais << " - " << place <<endl;
+					matches.push_back(point);
+					paises.push_back(it->first);
+					foundOne = true;
+				}
 			}
 		}
+		if(!foundOne)
+			threshold /=1.5;
 	}
-
-	for(int i=0; i<matches.size(); i++){
-		cout << paises[i] << "-" << matches[i]<<endl;
-	}
-	return matches;
 }
 
 int Agencia::editDistance(string pattern, string text)
@@ -214,7 +223,7 @@ int Agencia::editDistance(string pattern, string text)
 }
 
 
-void Agencia::pre_kmp(string pattern, vector<int> & prefix)
+void Agencia::pre_kmp(string pattern, vector<int> &prefix)
 {
 	int m=pattern.length();
 	prefix[0]=-1;
@@ -243,7 +252,6 @@ int Agencia::kmp(string text, string pattern)
 		if (pattern[q+1]==text[i])
 			q++;
 		if (q==m-1) {
-			cout <<"pattern occurs with shift" << i-m+1 << endl;
 			num++;
 			q=prefix[q];
 		}
@@ -252,32 +260,38 @@ int Agencia::kmp(string text, string pattern)
 }
 
 
-bool Agencia::pesquisaExata(string name) {
-
-	vector<string> matches;
-	vector<string> paises;
+bool Agencia::pesquisaExata(string name, vector<string> &matches, vector<string> &paises) {
+	bool exists = false;
 
 	for (map<string,set<string> >::iterator it = pontosInteresse.begin(); it!= pontosInteresse.end(); ++it) {
-		cout << "Getting points in " << it->first << "..."<< endl;
+		string pais = it->first;
+		stringToUpper(pais);
 		for(auto point: it->second) {
-			cout << "Name: " << name << endl;
-			cout << "tamanho: ----> " << name.length() << endl;
-			cout << "Point: " << point << endl;
-			int num = kmp(name, point);
-			cout << "Num: " << num;
+			string place = point;
+			stringToUpper(place);
+			int num = kmp(point, name);
 
 			if(num != 0)
 			{
-				cout << "HERE: " << point << " - " << point;
+				cout << "  " << pais << " - " << place <<endl;
 				matches.push_back(point);
 				paises.push_back(it->first);
-				return true;
+				exists = true;
 			}
 		}
 	}
 
-	for(int i = 0; i < matches.size(); i++) {
-		cout << matches[i] << endl;
-	}
-	return false;
+	if(!exists)
+		cout << "We are sorry to inform that the specified place/monument does not match any substring of our data. ";
+
+	return exists;
+}
+
+/**
+ * Converts any lower case letter of a string in upper case letters.
+ * @Param word - the string to be converted
+ */
+void Agencia::stringToUpper(string &word){
+	for(size_t i=0; i < word.length(); i++)
+		word.at(i) = toupper(word.at(i));
 }
