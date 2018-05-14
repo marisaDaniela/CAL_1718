@@ -32,6 +32,8 @@ public:
 	void verAlojamentos(string nomeCidade);
 	double getCustoTempo(string data, int dias, string cidade);
 	bool pesquisaExata(string name);
+	void pre_kmp(string pattern, vector<int> & prefix);
+	int kmp(string text, string pattern);
 };
 
 #endif

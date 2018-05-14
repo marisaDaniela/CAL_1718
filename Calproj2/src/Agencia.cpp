@@ -166,20 +166,20 @@ vector<string> Agencia::pesquisaAproximada(string word){
 	vector<string> paises;
 	const float threshold = 0.3;
 
-	for (map<string,set<string>>::iterator it=pontosInteresse.begin(); it!=pontosInteresse.end(); ++it){
-	    cout << "Getting points in " << it->first << "..."<< endl;
-	    for(auto point: it->second){
-	    	int num = editDistance(word,point);
-	    	size_t max = word.length();
-	    	if(point.length()>max)
-	    		max = point.length();
-	    	float result = (float) num/max;
-	    	result = 1 - result;
-	    	if(result>=threshold){
-	    		matches.push_back(point);
-	    		paises.push_back(it->first);
-	    	}
-	    }
+	for (map<string,set<string> >::iterator it=pontosInteresse.begin(); it!=pontosInteresse.end(); ++it){
+		cout << "Getting points in " << it->first << "..."<< endl;
+		for(auto point: it->second){
+			int num = editDistance(word,point);
+			size_t max = word.length();
+			if(point.length()>max)
+				max = point.length();
+			float result = (float) num/max;
+			result = 1 - result;
+			if(result>=threshold){
+				matches.push_back(point);
+				paises.push_back(it->first);
+			}
+		}
 	}
 
 	for(int i=0; i<matches.size(); i++){
@@ -213,16 +213,71 @@ int Agencia::editDistance(string pattern, string text)
 	return d[n];
 }
 
-bool Agencia::pesquisaExata(string name) {
 
-	for (map<string,set<string> >::iterator it= pontosInteresse.begin(); it!= pontosInteresse.end(); ++it) {
-		//cout << it->first << " => " ;// << it->second << '\n';
-		for(auto point: it->second) {
-			if(point == name)
-				return true;
-			else
-				return false;
+void Agencia::pre_kmp(string pattern, vector<int> & prefix)
+{
+	int m=pattern.length();
+	prefix[0]=-1;
+	int k=-1;
+	for (int q=1; q<m; q++) {
+		while (k>-1 && pattern[k+1]!=pattern[q])
+			k = prefix[k];
+		if (pattern[k+1]==pattern[q]) k=k+1;
+		prefix[q]=k;
+	}
+}
+
+int Agencia::kmp(string text, string pattern)
+{
+	int num=0;
+	int m=pattern.length();
+	vector<int> prefix(m);
+	pre_kmp(pattern, prefix);
+
+	int n=text.length();
+
+	int q=-1;
+	for (int i=0; i<n; i++) {
+		while (q>-1 && pattern[q+1]!=text[i])
+			q=prefix[q];
+		if (pattern[q+1]==text[i])
+			q++;
+		if (q==m-1) {
+			cout <<"pattern occurs with shift" << i-m+1 << endl;
+			num++;
+			q=prefix[q];
 		}
 	}
-	return true;
+	return num;
+}
+
+
+bool Agencia::pesquisaExata(string name) {
+
+	vector<string> matches;
+	vector<string> paises;
+
+	for (map<string,set<string> >::iterator it = pontosInteresse.begin(); it!= pontosInteresse.end(); ++it) {
+		cout << "Getting points in " << it->first << "..."<< endl;
+		for(auto point: it->second) {
+			cout << "Name: " << name << endl;
+			cout << "tamanho: ----> " << name.length() << endl;
+			cout << "Point: " << point << endl;
+			int num = kmp(name, point);
+			cout << "Num: " << num;
+
+			if(num != 0)
+			{
+				cout << "HERE: " << point << " - " << point;
+				matches.push_back(point);
+				paises.push_back(it->first);
+				return true;
+			}
+		}
+	}
+
+	for(int i = 0; i < matches.size(); i++) {
+		cout << matches[i] << endl;
+	}
+	return false;
 }
