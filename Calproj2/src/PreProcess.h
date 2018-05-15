@@ -19,6 +19,7 @@ class PreProcess{
 	void dijkstraAllPairs(Graph<T> graph);
 public:
 	PreProcess (Graph<T> old, int n, vector<Destino> allDestinos, Destino orig);
+	PreProcess (Graph<T> old, vector<Destino> allDestinos, Destino orig, map<string,int> dates);
 	bool checkIfPossible(Destino origin);
 	void orderAdj();
 	Graph<T> getGraph() const;
@@ -30,6 +31,22 @@ PreProcess<T>::PreProcess(Graph<T> old, int n, vector<Destino> allDestinos, Dest
 	num = n + 1;
 	locais.push_back(orig);
 	getDestinations(allDestinos);
+	dijkstraAllPairs(old);
+}
+
+template <class T>
+PreProcess<T>::PreProcess (Graph<T> old, vector<Destino> allDestinos, Destino orig, map<string,int> dates){
+	num = dates.size();
+	locais.push_back(orig);
+	newGraph.addVertex(orig,0);
+
+	for (map<string,int>::iterator it = dates.begin(); it!= dates.end(); ++it) {
+		Destino d = getDestinoByName(allDestinos, it->first);
+		if(d==orig)
+			continue;
+		locais.push_back(d);
+		newGraph.addVertex(d,it->second);
+	}
 	dijkstraAllPairs(old);
 }
 

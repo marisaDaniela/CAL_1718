@@ -149,11 +149,13 @@ int getIndexArray(vector<string> vec, string place){
 
 void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isApprox) {
 
-	printCities(destinos);
 	map<string,int> dates;
+	set<string> points;
 	string orig;
-
 	Destino d3;
+
+	printCities(destinos);
+
 	cout<< "-> Where are you traveling from? Write the name of the city from the provided list."<<endl;
 	bool validCity = false;
 	while(!validCity){
@@ -174,14 +176,18 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 	cout << endl;
 	cout<< "->Which place(s) or monument(s) would you like to visit? (Press ENTER to stop!)" << endl;
 
-	set<string> points;
-
 	while(!valid) {
 		string name = "";
 		cout<< "Place/Monument? ";
 		getline(cin,name);
-		if(name.length()==0)
-			break;
+		if(name.length()==0){
+			if(points.size()==0){
+				cout << "You must at least provide a valid point of interest! ";
+				continue;
+			}
+			else
+				break;
+		}
 		else{
 			vector<string> matches, paises;
 			if(isApprox)
@@ -217,7 +223,28 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 			}
 		}
 	}
-	//TODO meter tudo no preprocess graph e letz go
+
+	PreProcess<Destino> *p = new PreProcess<Destino>(myGraph,destinos,d3,dates);
+	if(!p->checkIfPossible(d3))
+		cout << "There is no route that can take you to all those locations from your starting city!"<<endl;
+	else{
+		Graph<Destino> newGraph = p->getGraph();
+		newGraph.setAgencia(a1);
+		string date1, date2;
+		cout<< "-> Which would be the minimum starting date? (day/month/year) ";
+		readInputDate(date1, "Minimum starting date? ");
+		cout<< "\n-> Which would be the maximum final date? (day/month/year) ";
+		bool validDate = false;
+		while(!validDate){
+			readInputDate(date2, "Maximum final date? ");
+			if(isValidDate(dataFinal(date1,newGraph.getNumNights()),date2))
+				validDate = true;
+			else
+				cout << "The final date must be bigger or equal to "<<dataFinal(date1,newGraph.getNumNights()) << ", due to number of nights you have selected. Maximum final date? ";
+		}
+		newGraph.dfs(d3,date1,date2);
+	}
+	cout<<"\nProgram ended!"<<endl;
 
 }
 
