@@ -102,7 +102,7 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	cout << "* " << " 6. Exit               " << string(26, ' ') << "*" << endl;
 
 	cout << "*" << string(50, '*') << "*" << endl;
-	cout << "Choose[1-4] : \n";
+	cout << "Choose[1-6] : \n";
 
 	bool validInput  = false;
 	while(!validInput){
@@ -158,6 +158,7 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 
 	map<string,int> dates;
 	set<string> citiesPicked, points;
+	map<string, set<string> > pointsInCity;
 	string orig;
 	Destino d3;
 
@@ -225,6 +226,18 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 							continue;
 						}
 
+						auto it = pointsInCity.find(paises.at(index));
+						if (it == pointsInCity.end()){
+							set<string> tmp;
+							tmp.insert(point);
+							pointsInCity[paises.at(index)] = tmp;
+						}
+						else{
+							set<string> tmp = pointsInCity.at(paises.at(index));
+							tmp.insert(point);
+							pointsInCity[paises.at(index)] = tmp;
+						}
+
 						auto retCities = citiesPicked.insert(paises.at(index));
 						if(retCities.second == false)
 							dates.at(paises.at(index))++;
@@ -262,6 +275,24 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 		}
 		newGraph.dfs(d3,date1,date2);
 	}
+
+	cout <<endl;
+	cout << "Lists of points of interest to see:" <<endl;
+	for(auto it=pointsInCity.begin(); it!=pointsInCity.end(); ++it){
+		string city = it->first;
+		stringToUpper(city);
+		cout << " " << city << ":"<< endl;
+		for(auto p:it->second){
+			stringToUpper(p);
+			if(p==city){
+				if(it->second.size()==1)
+					cout << "  - Not specified" << endl;
+			}
+			else
+				cout << "  - " <<p << endl;
+		}
+	}
+
 	cout<<"\nProgram ended!"<<endl;
 
 }

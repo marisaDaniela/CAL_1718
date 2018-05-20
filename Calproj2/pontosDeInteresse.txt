@@ -1,7 +1,7 @@
-Amesterdao- casa de anne frank, museu van gogh, jordaan, blauwbrug, museu casa de Rembrandt, Shoreline Park, 
-Berlim- muro de berlim, Portao de Brandemburgo, fort hahneberg, game science center, strandbar Mitte, topografia do terror, bode museum
-Bruxelas- catedral de sao Michel, place de l'Agora e galeries royales, grand place, rota dos quadrinhos, jardin du mont des arts, cinquentenaire
-Lisboa- torre de belem, alfama, oceanario, mosteiro dos jeronimos, praca do comercio, miradouro da graca, campo dos martires, jardim de amalia rodrigues, fonte luminosa, teatro tivoli
-Madrid- parque do retiro, museu do prado, museu thyssen-bornemisza, arco de cuchilleros, museo geominero, parque felipe vi, teatro Amaya, gran via, plaza mayor, mercado san miguel, 
-Paris- museu d'Orsay, catedral de notre-dame, museu do louvre, torre Eiffel, jardim de Luxemburgo, ponte Alexandre III, marais, museu rodin, rio sena, montmartre
-Praga- old town square, catedral de sao vito, ponte carlos, castelo de praga, edificio da camara municipal com relogio astronomico,
+Amesterdao- casa de anne frank, museu van gogh, jordaan, blauwbrug, museu casa de Rembrandt, Shoreline Park, amesterdao,
+Berlim- muro de berlim, Portao de Brandemburgo, fort hahneberg, game science center, strandbar Mitte, topografia do terror, bode museum, berlim,
+Bruxelas- catedral de sao Michel, place de l'Agora e galeries royales, grand place, rota dos quadrinhos, jardin du mont des arts, cinquentenaire, bruxelas,
+Lisboa- torre de belem, alfama, oceanario, mosteiro dos jeronimos, praca do comercio, miradouro da graca, campo dos martires, jardim de amalia rodrigues, fonte luminosa, teatro tivoli, lisboa,
+Madrid- parque do retiro, museu do prado, museu thyssen-bornemisza, arco de cuchilleros, museo geominero, parque felipe vi, teatro Amaya, gran via, plaza mayor, mercado san miguel, madrid,
+Paris- museu d'Orsay, catedral de notre-dame, museu do louvre, torre Eiffel, jardim de Luxemburgo, ponte Alexandre III, marais, museu rodin, rio sena, montmartre, paris, 
+Praga- old town square, catedral de sao vito, ponte carlos, castelo de praga, edificio da camara municipal com relogio astronomico, praga,
