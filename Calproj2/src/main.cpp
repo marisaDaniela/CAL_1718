@@ -278,7 +278,7 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 	for(auto it=pointsInCity.begin(); it!=pointsInCity.end(); ++it){
 		string city = it->first;
 		stringToUpper(city);
-		cout << " " << city << ":"<< endl;
+		cout << " " << city << "(" << dates.at(it->first) << " night(s) booked):"<< endl;
 		for(auto p:it->second){
 			stringToUpper(p);
 			if(p==city){
