@@ -157,7 +157,7 @@ int getIndexArray(vector<string> vec, string place){
 void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isApprox) {
 
 	map<string,int> dates;
-	set<string> citiesPicked, points;
+	set<string> points;
 	map<string, set<string> > pointsInCity;
 	string orig;
 	Destino d3;
@@ -189,7 +189,7 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 		cout<< "Place/Monument? ";
 		getline(cin,name);
 		if(name.length()==0){
-			if(citiesPicked.size()==0){
+			if(pointsInCity.size()==0){
 				cout << "You must at least provide a valid point of interest! ";
 				continue;
 			}
@@ -231,18 +231,15 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 							set<string> tmp;
 							tmp.insert(point);
 							pointsInCity[paises.at(index)] = tmp;
+							dates[paises.at(index)]=1;
 						}
 						else{
 							set<string> tmp = pointsInCity.at(paises.at(index));
 							tmp.insert(point);
 							pointsInCity[paises.at(index)] = tmp;
+							dates.at(paises.at(index))++;
 						}
 
-						auto retCities = citiesPicked.insert(paises.at(index));
-						if(retCities.second == false)
-							dates.at(paises.at(index))++;
-						else
-							dates[paises.at(index)]=1;
 						cout << "Point of interest added!" <<endl;
 					}
 				}
