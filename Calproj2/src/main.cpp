@@ -8,6 +8,8 @@
 #include "PreProcess.h"
 #include "Agencia.h"
 
+const int placesPerDay = 2;
+
 using namespace std;
 
 void inicio(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1);
@@ -92,19 +94,21 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 	cout << "*" << string(50, '*') << "*" << endl;
 	cout << "*" << string(19, ' ') <<   "TRAVEL AGENCY" <<  string(18, ' ') << "*" << endl;
 	cout << "*" << string(50, '*') << "*" << endl;
-	cout << "* " << " 1. Exact search       " << string(26, ' ') << "*" << endl;
-	cout << "* " << " 2. Approximate search " << string(26, ' ') << "*" << endl;
-	cout << "* " << " 3. Back               " << string(26, ' ') << "*" << endl;
-	cout << "* " << " 4. Exit               " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 1. Direct Travel      " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 2. Visit Multiple Places" << string(24, ' ') << "*" << endl;
+	cout << "* " << " 3. Exact search       " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 4. Approximate search " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 5. Back               " << string(26, ' ') << "*" << endl;
+	cout << "* " << " 6. Exit               " << string(26, ' ') << "*" << endl;
 
 	cout << "*" << string(50, '*') << "*" << endl;
 	cout << "Choose[1-4] : \n";
 
 	bool validInput  = false;
 	while(!validInput){
-		readInputInt(op, "Choose[1-4]: ");
-		if (op <1 || op>4 ){
-			cout << "Invalid Option! Choose[1-4]:";
+		readInputInt(op, "Choose[1-6]: ");
+		if (op <1 || op>6 ){
+			cout << "Invalid Option! Choose[1-6]:";
 			pause();
 		}
 		else
@@ -115,19 +119,22 @@ void start(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1) {
 
 	switch (op){
 	case 1:
-		//computeRoute(destinos,myGraph,a1,true);
-		clientInterface(destinos,myGraph,a1,false);
+		computeRoute(destinos,myGraph,a1,true);
 		break;
 	case 2:
-		//computeRoute(destinos,myGraph,a1,false);
-		clientInterface(destinos,myGraph,a1,true);
+		computeRoute(destinos,myGraph,a1,false);
 		break;
 	case 3:
-		inicio(destinos,myGraph,a1);
+		clientInterface(destinos,myGraph,a1,false);
 		break;
 	case 4:
-		exit(1);
+		clientInterface(destinos,myGraph,a1,true);
 		break;
+	case 5:
+		inicio(destinos,myGraph,a1);
+		break;
+	case 6:
+		exit(1);
 	}
 
 }
@@ -150,7 +157,7 @@ int getIndexArray(vector<string> vec, string place){
 void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1, bool isApprox) {
 
 	map<string,int> dates;
-	set<string> points;
+	set<string> citiesPicked, points;
 	string orig;
 	Destino d3;
 
@@ -181,7 +188,7 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 		cout<< "Place/Monument? ";
 		getline(cin,name);
 		if(name.length()==0){
-			if(points.size()==0){
+			if(citiesPicked.size()==0){
 				cout << "You must at least provide a valid point of interest! ";
 				continue;
 			}
@@ -212,8 +219,14 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 						cout << "That point of interest belongs to the selected origin. Please pick places that do not belong to your origin city." <<endl;
 					}
 					else{
-						auto ret = points.insert(paises.at(index));
-						if(ret.second == false)
+						auto retPoints = points.insert(point);
+						if(retPoints.second==false){
+							cout << "That point was already selected!" <<endl;
+							continue;
+						}
+
+						auto retCities = citiesPicked.insert(paises.at(index));
+						if(retCities.second == false)
 							dates.at(paises.at(index))++;
 						else
 							dates[paises.at(index)]=1;
@@ -222,6 +235,11 @@ void clientInterface(vector<Destino> destinos,Graph<Destino> myGraph, Agencia a1
 				}
 			}
 		}
+	}
+
+	for(auto it=dates.begin(); it!=dates.end(); ++it){
+		int aux = ceil((float)it->second/placesPerDay);
+		(it->second) = aux;
 	}
 
 	PreProcess<Destino> *p = new PreProcess<Destino>(myGraph,destinos,d3,dates);

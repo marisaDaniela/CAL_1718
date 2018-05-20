@@ -263,13 +263,15 @@ int Agencia::kmp(string text, string pattern)
 bool Agencia::pesquisaExata(string name, vector<string> &matches, vector<string> &paises) {
 	bool exists = false;
 
+
+	stringToUpper(name);
 	for (map<string,set<string> >::iterator it = pontosInteresse.begin(); it!= pontosInteresse.end(); ++it) {
 		string pais = it->first;
 		stringToUpper(pais);
 		for(auto point: it->second) {
 			string place = point;
 			stringToUpper(place);
-			int num = kmp(point, name);
+			int num = kmp(place, name);
 
 			if(num != 0)
 			{
